@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+  id="WebApp_ID" version="3.1">
+  
+  <display-name>Exo01</display-name>
+  
+  <!-- Exemple de declaration de la Servlet en XML -->
+  <!--  
+  <servlet>
+    <description>Description de ma servlet 01</description>
+    <display-name>Ma Servlet 01</display-name>
+    <servlet-name>PMServlet</servlet-name>
+    <servlet-class>com.exemple.controleur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PMServlet</servlet-name>
+    <url-pattern>/PMServlet</url-pattern>
+    <url-pattern>/PMServlet02</url-pattern>
+  </servlet-mapping>
+  -->
+  
+  <session-config>
+    <session-timeout>90</session-timeout>
+  </session-config>
+
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+  <!-- Exemple de la gestion des erreurs -->
+  <!--  
+  <error-page>
+    <error-code>404</error-code>
+    <location>/page404.html</location>
+  </error-page>
+  -->
+</web-app>

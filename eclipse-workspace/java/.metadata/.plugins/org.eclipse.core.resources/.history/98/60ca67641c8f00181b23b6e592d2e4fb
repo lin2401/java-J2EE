@@ -1,0 +1,45 @@
+package fr.banque;
+
+public class CompteRemunere extends Compte implements ICompteRemunere {
+
+	private double taux;
+
+	public CompteRemunere(int numero, double solde) {
+		super(numero, solde);
+
+	}
+
+	public CompteRemunere(int numero, double solde, double taux) {
+		super(numero, solde);
+		this.taux = taux;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(super.toString());
+		builder.delete(builder.length() - 1, builder.length()); // pour enlever le [
+		builder.append(", taux=");
+		builder.append(this.taux);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	public double calculerInteret() {
+		return this.taux * this.getSolde();
+	}
+
+public void verserInteret() {
+ajouter(calculerInteret());
+
+}
+
+	public double getTaux() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+public void setTaux(double unTaux) {
+	// TODO Auto-generated method stub
+
+}

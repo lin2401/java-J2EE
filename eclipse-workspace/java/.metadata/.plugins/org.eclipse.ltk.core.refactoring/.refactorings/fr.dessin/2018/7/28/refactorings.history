@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;fr.dessin/src/Point2D.java&apos; to &apos;Point3D.java&apos;" description="Rename resource &apos;Point2D.java&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/Point2D.java" name="Point3D.java" stamp="1531228759858" updateReferences="true"/>
+</session>

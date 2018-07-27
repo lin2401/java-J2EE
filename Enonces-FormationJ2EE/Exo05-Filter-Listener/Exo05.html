@@ -1,0 +1,250 @@
+<!--
+	Copyright 2013
+	Ferret Renaud
+	admin@ferretrenaud.fr
+-->
+
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="Author" content="FERRET Renaud"/>
+		<meta name="Description" content="Exercice de formation"/>
+		<meta name="copyright" content="(C) Copyright 2013 FERRET Renaud"/>
+		<meta name="distribution" content="global"/>
+
+		<title>Java JEE - Exercice 5 - Filter et Listener</title>
+
+		<link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+		<!-- Ne pas voir les liens lors de l'impressions -->
+		<style>
+			@media print {
+				a[href]:after {
+					content: none;
+				}
+			}
+		</style>
+		<!--[if lt IE 9]>
+			<script src="../bootstrap-3.3.7-dist/js/html5shiv.min.js"></script>
+			<script src="../bootstrap-3.3.7-dist/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="container">
+		<nav class="navbar navbar-default navbar-right" id="top">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="#" title="JEE - Exercice 5">JEE E5</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			  <ul class="nav navbar-nav">
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">1 - Filter<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t11">1-1 Ecriture de la classe</a></li>
+					<li><a href="#t12">1-2 Rectification des contôleurs</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">2 - Se déconnecter<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t21">2-1 Ecriture du contrôleur pour se déconnecter</a></li>
+					<li><a href="#t21">2-1 Ajout du lien dans JSP Menu</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3 - Listener<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t31">3-1 Ecriture de la classe</a></li>
+					<li><a href="#t32">3-2 Ajout du contrôleur pour lister les utilisateurs</a></li>
+					<li><a href="#t33">3-3 Ajout du lien dans JSP Menu</a></li>
+					<li><a href="#t34">3-4 Ajout de la JSP</a></li>
+				  </ul>
+				</li>
+
+			  </ul>
+			</div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		<br/>
+		<div class="page-header">
+			<h1>Java JEE - Exercice 5 - Filter et Listener</h1>
+			<p>Nous allons réaliser la gestion de la validation de l'authentification à travers un Filter et la gestion de la liste des personnes connectées par un Listener. </p>
+			<nav>
+				<ul class="pager">
+					<li class="previous" title="Banque"><a href="../Exo04-Banque%20Full/Exo04.html"><span aria-hidden="true">&larr;</span> Exercice Précédent</a></li>
+					<li class="next" title="JMS"><a href="../Exo06-Jms/Exo06.html">Exercice Suivant <span aria-hidden="true">&rarr;</span></a></li>
+				</ul>
+			</nav>
+		</div> <!-- page header -->
+
+		<section>
+			<h2 id="t1"><span class="label label-default">1</span> Filter</h2>
+			<div class="panel panel-default panel-primary" id="t11">
+				<div class="panel-heading">
+					<h3 class="panel-title">Ecriture de la classe <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Créez une classe Java pour votre Filter, dans Eclipse, dans la perspective JEE, faites un clic droit puis New Filter.</p>
+					<p>Elle implémentera l'interface <a target="_blank" href="https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html">javax.servlet.Filter</a></p>
+					<p>Vous avez deux options pour votre code (faire l'une <b>ou</b> l'autre) : </p>
+					<ul>
+						<li>Prendre comme <b>urlPatterns</b> /*, et gérer dans la méthode <i>doFilter</i> les URLs spécifiques (comme la page login et son contrôleur)</li>
+						<li>Prendre comme <b>urlPatterns</b> toutes les URLs qui doivent être sécurisées (typiquement ceux de vos contrôleurs). Dans ce cas, il n'y a rien de particulier à gérer dans la méthode <i>doFilter</i></li>		
+					</ul>
+					<p>La première solution est la plus propre même si elle nécessite plus de code, elle permet de ne rien oublier. </p>
+					<p>Dans la méthode <i>doFilter</i>, vous devrez :</p>
+					<ul>
+						<li>Caster le paramètre <a target="_blank" href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html">ServletRequest</a> en <a target="_blank" href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html">HttpServletRequest</a></li>
+						<li>Si vous avez opté pour l'option 1, récupérer l'URI qui est demandé : <pre>String uri = request.getRequestURI();</pre></li>
+						<li>Regarder si cet URI est spécial ou non. S'il est spécial (page login, contrôleur login, ...) passer la main : <pre>filterChain.doFilter(request, response);</pre>. Sinon faire la vérification qui suit. </p>
+						<li>Récupérer la session et regarder dedans si l'élément d'authentification est bien présent (réaliser un session.getAttribute("xxx"))</li>
+						<li>S'il est présent, passer la main : <pre>filterChain.doFilter(request, response);</pre></li>
+						<li>S'il n'est pas présent, faire un foward ver la page login en indiquant un message sur la request.</li>
+					</ul>
+					<p>Il est fortement conseillé d'ajouter un log (ou une trace) dans votre Filter afin de tracer les URI. </p>
+				</div>
+			</div>
+			
+			<div class="panel panel-default panel-primary" id="t12">
+				<div class="panel-heading">
+					<h3 class="panel-title">Rectification des contôleurs <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Comme le Filter sera appelé avant vos contrôleurs, vous pouvez retirer de ses derniers le code qui vérifiait que l'élément d'authentification était bien présent dans la session.</p>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t2"><span class="label label-default">2</span> Se déconnecter</h2>
+			<div class="panel panel-default panel-primary" id="t21">
+				<div class="panel-heading">
+					<h3 class="panel-title">Ecriture du contrôleur pour se déconnecter <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Réalisez le contrôleur qui s'occupera de déconnecter la personne. Vous êtes libre de choisir votre url pour cette Servlet. </p>
+					<p>Sur la méthode doGet (ou autre) : </p>
+					<ul>
+						<li>On vide la session (faire des removeAttribute sur tous les éléments qui sont dans la session)</li>
+						<li>Idéalement, vous ferez aussi appel à la méthode <a target="_blank" href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html#logout--">logout()</a> de l'objet <u>HttpServletRequest</u> (et pas HttpSession). </li>
+						<li>Et pour finir, on se dirige vers la page login (avec un message <i>Merci de votre visite</i>)</li>
+					</ul>
+				</div>
+			</div>
+			<div class="panel panel-default panel-primary" id="t22">
+				<div class="panel-heading">
+					<h3 class="panel-title">Ajout du lien dans JSP Menu <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Dans la page menu.jsp, ajoutez un lien qui pointera vers votre contrôleur. </p>
+					<p>Pensez à faire usage de &lt;c:url .../&gt;</p>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t3"><span class="label label-default">3</span> Listener</h2>
+			<div class="panel panel-default panel-primary" id="t31">
+				<div class="panel-heading">
+					<h3 class="panel-title">Ecriture de la classe <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>On voudrait une liste de personnes connectées sur le site, une liste d'ID, de nom + prénom, de nom + prénom + IP + heure de connexion, ... A vous de voir ce que vous voulez dans la liste (simple String ou objet fait maison). </p>
+					<p>Cette liste sera stockée dans le scope applicatif. </p>
+<pre>
+  HttpSession session = request.getSession(true);
+  // Le scope applicatif :
+  ServletContext context = session.getServletContext();
+  // Placer une information dans le scope
+  context.setAttribute("clef", obj);
+  // Récupérer une information du scope
+  Object obj = context.getAttribute("clef");</pre>
+					<p>Vous pouvez aussi faire usage d'une java.util.Map si vous trouvez que la java.util.List est trop restrictive. </p>
+					
+					<p>Créez une classe Java pour votre listener, dans Eclipse, dans la perspective JEE, faites un clic droit puis New Listener.</p>
+					<p>Choisissez les interfaces d'évènements qui répondent à notre besoin : lister les personnes qui sont actuellement sur le site web. </p>
+					<p>Prenez : <a target="_blank" href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html">HttpSessionAttributeListener</a> qui va gérer l'ajout / la suppression / l'écrasement d'un attribut de session. </p>
+					<p>Prenez aussi : <a target="_blank" href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html">HttpSessionListener</a> qui va gérer la création et la destruction de l'objet session. </p>
+					<p>Cela vous fera 5 méthodes à coder. </p>
+					<p>Tout comme dans le filter, il est fortement conseillé d'ajouter un log (ou une trace) dans votre Listener afin de tracer les évènements. </p>
+					<p>Logique :</p>
+					<ul>
+						<li>Evènement de création de la session (<b>sessionCreated</b>) : on ne fait rien. Un objet session est créé lors d'un premier accès à votre site. Cela d'implique pas que la personne est connectée.</li>
+						<li>Evènement de destruction de la session (<b>sessionDestroyed</b>) : via le paramètre de cette méthode on récupère les informations de la session et on met à jour la liste des personnes connectées (une en moins). On passera dans cette méthode quand la session tombera en time out.</li>
+						<li>Evènement d'ajout d'un attribut dans la session (<b>attributeAdded</b>) : via le paramètre de cette méthode on récupère le nom de l'attribut et sa valeur. Si l'attribut porte le nom de la clef qui mémorise l'élément d'authentification alors on met à jour la liste des personnes connectées (une en plus). On passera dans cette méthode quand le contrôleur qui gère le login sera exécuté.</li>
+						<li>Evènement de suppression d'un attribut dans la session (<b>attributeRemoved</b>) : via le paramètre de cette méthode on récupère le nom de l'attribut et sa valeur. Si l'attribut porte le nom de la clef qui mémorise l'élément d'authentification alors on met à jour la liste des personnes connectées (une en moins). On passera dans cette méthode quand le contrôleur qui gère le logout sera exécuté.</li>
+						<li>Evènement d'écrasement d'un attribut dans la session (<b>attributeReplaced</b>) : via le paramètre de cette méthode on récupère le nom de l'attribut et sa valeur. Si l'attribut porte le nom de la clef qui mémorise l'élément d'authentification alors on met à jour la liste des personnes connectées (surtout si on gère l'IP et l'heure de connexion). On passera dans cette méthode quand l'utilisateur se connectera plusieurs fois sans se déconnecter avant.</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="panel panel-default panel-primary" id="t32">
+				<div class="panel-heading">
+					<h3 class="panel-title">Ajout du contrôleur pour lister les utilisateurs <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>C'est votre Listener qui se charge de la mise à jour / création de la liste, mais vous êtes en modèle MVC, avant d'atteindre la page qui affiche la liste des utilisateurs connectés il faut passer par un contrôleur. </p>
+					<p>Créez cette servlet en choisissant un URL pattern. </p>
+					<p>Dans la méthode doGet (ou service) : </p>
+					<ul>
+						<li>Prenez votre liste d'utilisateur qui se trouve dans le scope applicatif. </li>
+						<li>Faites-en une copie. En effet, sous forte charge, il est possible qu'on se retrouve dans le cas où pendant que quelqu'un se connecte une autre personne demande à regarder la liste des personnes connectées. En faisant une copie, il n'y aura pas de problème. </li>
+						<li>Si besoin, ajustez la copie, et placez la dans le scope request. </li>
+						<li>Dirigez-vous vers la page JSP qui se chargera d'afficher la liste. </li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t33">
+				<div class="panel-heading">
+					<h3 class="panel-title">Ajout du lien dans JSP Menu <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Dans la page menu.jsp, ajoutez un lien qui pointera vers votre contrôleur. </p>
+					<p>Pensez à faire usage de &lt;c:url .../&gt;</p>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t34">
+				<div class="panel-heading">
+					<h3 class="panel-title">Ajout de la JSP <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Créez une JSP qui se chargera d'afficher la liste des personnes connectées.</p>
+				</div>
+			</div>
+			
+		</section>
+
+		<nav>
+			<ul class="pager">
+				<li class="previous" title="Banque"><a href="../Exo04-Banque%20Full/Exo04.html"><span aria-hidden="true">&larr;</span> Exercice Précédent</a></li>
+				<li class="next" title="JMS"><a href="../Exo06-Jms/Exo06.html">Exercice Suivant <span aria-hidden="true">&rarr;</span></a></li>
+			</ul>
+		</nav>
+
+		<br/><br/>
+		<footer>
+			<p class="text-center">
+				<a href="http://validator.w3.org/">
+					<img src="../bootstrap-3.3.7-dist/img/HTML5_Logo_32.png" alt="Valid HTML 5.0" />
+				</a><br/>
+				Copyright <span class="glyphicon glyphicon-copyright-mark"></span> <a href="http://ferretrenaud.fr" target="_blank">Ferret Renaud</a> 2013
+			</p>
+		</footer>
+
+		<script src="../bootstrap-3.3.7-dist/js/jquery.min.js"></script>
+		<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	</body>
+</html>
+

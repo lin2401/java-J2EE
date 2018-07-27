@@ -1,0 +1,39 @@
+package fr.banque;
+
+public class CompteASeuilRemunure extends CompteRemunere implements ICompteASeuil {
+
+	private double seuil;
+
+	public CompteASeuilRemunure() {
+		this(-1, 0, 0);
+	}
+
+	public CompteASeuilRemunure(int numero, double solde, double seuil, double ta) {
+		super(numero, solde);
+		this.seuil = seuil;
+		setTaux(ta);
+	}
+
+	@Override
+	public double getSeuil() {
+		return this.seuil;
+	}
+
+	@Override
+	public void setSeuil(double seuil) {
+		this.seuil = seuil;
+	}
+
+	@Override
+	public void retirer(double montant) throws BanqueException {
+		if (this.getSolde() - montant < this.getSeuil()) {
+			// rien
+			throw new BanqueException("pas possible");
+		}
+		super.retirer(montant);
+	}
+
+	
+	
+
+}

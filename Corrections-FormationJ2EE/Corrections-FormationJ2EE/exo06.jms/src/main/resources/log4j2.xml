@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="warn" strict="true">
+
+  <Appenders>
+    <!-- Consoles -->
+    <Console name="stdout" target="SYSTEM_OUT">
+      <PatternLayout pattern="[%d{dd/MM/yyyy HH:mm:ss}] - %5p - %C.%M(...) - %m %n" />
+    </Console>
+  </Appenders>
+
+  <Loggers>
+    <!-- Pour notre code -->
+    <Logger name="fr.exo.jms" level="debug" additivity="false">
+      <AppenderRef ref="stdout" />
+    </Logger>
+    <!-- Pour le reste -->
+    <Root level="warn">
+      <AppenderRef ref="stdout" />
+    </Root>
+  </Loggers>
+
+</Configuration>

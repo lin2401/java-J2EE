@@ -1,0 +1,159 @@
+package fr.banque;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class Client {
+
+	private String nom;
+	private String prenom;
+	private int age;
+	private int numero;
+	private List<compte> listeCompte = new arrayList<compte>();;
+
+	public Client() {
+		this(null, null, -1, -1);
+	}
+
+	public Client(String nom, String prenom, int age, int numero) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.age = age;
+		this.numero = numero;
+
+	}
+
+	/**
+	 * @return the nom
+	 */
+	public String getNom() {
+		return this.nom;
+	}
+
+	/**
+	 * @param nom the nom to set
+	 */
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	/**
+	 * @return the prenom
+	 */
+	public String getPrenom() {
+		return this.prenom;
+	}
+
+	/**
+	 * @param prenom the prenom to set
+	 */
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	/**
+	 * @return the age
+	 */
+	public int getAge() {
+		return this.age;
+	}
+
+	/**
+	 * @param age the age to set
+	 */
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	/**
+	 * @return the numero
+	 */
+	public int getNumero() {
+		return this.numero;
+	}
+
+	/**
+	 * @param numero the numero to set
+	 */
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+	/**
+	 * @return the comptes
+	 */
+	public Compte[] getComptes() {
+		return this.comptes;
+	}
+
+	/**
+	 * @param comptes the comptes to set
+	 */
+	public void setComptes(Compte[] comptes) {
+		this.comptes = comptes;
+	}
+
+	public void ajouterCompte(Compte compte) {
+
+		for (int i = 0; i < this.comptes.length; i++) {
+
+			if (this.comptes[i] == null) {
+
+				this.comptes[i] = compte;
+				break;
+
+				return; // casser la methode et si on utilise return on utlise pas else
+
+			}
+
+			else {
+
+				System.out.println("pas possible d'ajouter un nouveau compte");
+
+			}
+
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Client [nom=");
+		builder.append(this.nom);
+		builder.append(", prenom=");
+		builder.append(this.prenom);
+		builder.append(", age=");
+		builder.append(this.age);
+		builder.append(", numero=");
+		builder.append(this.numero);
+		builder.append(", comptes=");
+		builder.append(Arrays.toString(this.comptes));
+		builder.append("]");
+		return builder.toString();
+	}
+
+	public Compte getCompte(int numeroCompte) {
+
+		for (int i = 0; i < this.comptes.length; i++) {
+
+			if (this.comptes[i] != null && this.comptes[i].getNumero() == numeroCompte) {
+
+				// return this.comptes[i];
+				System.out.println(this.comptes[i]);
+//System.out.print("pas trouve le compte " + numeroCompte + " pour le client " + this
+				// return null;
+			} else {
+				System.out.println("attention");
+			}
+		}
+
+		return null;
+	}
+}

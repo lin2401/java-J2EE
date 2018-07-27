@@ -1,0 +1,278 @@
+<!--
+	Copyright 2013
+	Ferret Renaud
+	admin@ferretrenaud.fr
+-->
+
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="Author" content="FERRET Renaud"/>
+		<meta name="Description" content="Exercice de formation"/>
+		<meta name="copyright" content="(C) Copyright 2013 FERRET Renaud"/>
+		<meta name="distribution" content="global"/>
+
+		<title>Java JEE - Exercice 6 - JMS</title>
+
+		<link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+		<!-- Ne pas voir les liens lors de l'impressions -->
+		<style>
+			@media print {
+				a[href]:after {
+					content: none;
+				}
+			}
+		</style>
+		<!--[if lt IE 9]>
+			<script src="../bootstrap-3.3.7-dist/js/html5shiv.min.js"></script>
+			<script src="../bootstrap-3.3.7-dist/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="container">
+		<nav class="navbar navbar-default navbar-right" id="top">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="#" title="JEE - Exercice 6">JEE E6</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			  <ul class="nav navbar-nav">
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">1 - Installation<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t11">1-1 Importation du projet</a></li>
+					<li><a href="#t12">1-2 Installation Active MQ</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">2 - Producteur<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t21">2-1 JSP Producteur</a></li>
+					<li><a href="#t22">2-2 Servlet Producteur</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3 - Consommateur<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t31">3-1 Servlet Consommateur</a></li>
+					<li><a href="#t32">3-2 JSP Consommateur</a></li>
+				  </ul>
+				</li>
+
+			  </ul>
+			</div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		<br/>
+		<div class="page-header">
+			<h1>Java JEE - Exercice 6 - JMS</h1>
+			<p>Nous allons réaliser un nouveau projet qui utilise le Java Messaging Service comme client/serveur en mode synchrone. </p>
+			<nav>
+				<ul class="pager">
+					<li class="previous" title="Filter-Listener"><a href="../Exo05-Filter-Listener/Exo05.html"><span aria-hidden="true">&larr;</span> Exercice Précédent</a></li>
+				</ul>
+			</nav>
+		</div> <!-- page header -->
+
+		<section>
+			<h2 id="t1"><span class="label label-default">1</span> Installation</h2>
+			<div class="panel panel-default panel-primary" id="t11">
+				<div class="panel-heading">
+					<h3 class="panel-title">Importation du projet <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Importez le projet en06.jms qui se trouve dans le répertoire de l'énoncé
+					(File/Import -gt; Existing Maven Projects puis indiquez le dossier). </p>
+					<p>Le nom du context root est <b>en06.jms</b>. </p>
+					<p>Les JARs nécessaires sont déjà pris en compte par Maven. Vous avez une servlet abstraite qui vous servira pour les deux autres servlets.</p>
+				</div>
+			</div>
+			<div class="panel panel-default panel-primary" id="t12">
+				<div class="panel-heading">
+					<h3 class="panel-title">Installation Active MQ <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>La norme JMS est standard, mais il faut choisir une implémentation, ici on fera usage du serveur JMS open source <a href="http://activemq.apache.org/" target="_blank">Active MQ</a>. </p>
+					<p>Pour l'installation, téléchargez simplement l'archive ZIP. Dé zippez le tout sur votre machine.</p>
+					<p>Vérifiez que vous avez une variable JAVA_HOME dans votre système. </p>
+					<p>Ouvrez un invité de commande et allez dans le dossier [InstallActiveMQ]/bin/[OS], par exemple :</p>
+					<pre>cd c:\apache-activemq-5.15.3\bin\win64</pre>
+					<p>Tapez la commande :</p>
+					<pre>activemq.bat start</pre>
+					<p>Vous pouvez vous connecter au serveur ActiveMQ en allant sur <a href="http://localhost:8161/" target="_blank">http://localhost:8161/</a> (identifiants/mot de passe : admin/admin)</p>
+					<p>Pour arrêter le serveur JMS, tapez simplement :</p>
+					<pre>activemq.bat stop</pre>
+					<p>Vous pouvez aussi faire <kbd><kbd>ctrl</kbd> + <kbd>c</kbd></kbd> dans l'invité de commande. </p>
+					<p>Les messages JMS placés dans des queues sont gérés en <b>FIFO</b> (FirstIn FirstOut). </p>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t2"><span class="label label-default">2</span> Producteur</h2>
+			<div class="panel panel-default panel-primary" id="t21">
+				<div class="panel-heading">
+					<h3 class="panel-title">JSP Producteur <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Réalisez une JSP <b>envoyer.jsp</b>. Elle va nous permettre de saisir un message qui sera envoyé par la servlet Producteur.</p>
+					<p>Vous pouvez vous inspirer de la page HTML envoyer.html qui se trouve dans le dossier src\main\webapp\ du projet. </p>
+					<ul>
+						<li>Faites usage des JSTL si besoin.</li>
+						<li>Elle contient un simple formulaire contenant le texte du message et qui va appeler la servlet Producteur lors du submit.</li>
+					</ul>
+					<p>Réalisez une JSP <b>erreur_e.jsp</b>. Elle nous servira pour afficher les erreurs potentielles levées par la servlet Producteur.</p>
+					<ul>
+						<li>Faites usage des JSTL si besoin.</li>
+						<li>Affichez le message d'erreur (envoyé par la servlet Producteur) et proposez de réessayer.</li>					
+					</ul>				
+					<p>Réalisez une JSP <b>confirmation_e.jsp</b>. Elle nous servira pour confirmer que le message est bien parti vers le serveur JMS.</p>
+					<p>Vous pouvez vous inspirer de la page HTML confirmation_e.html qui se trouve dans le dossier WebContent du projet. </p>        
+					<ul>
+						<li>Faites usage des JSTL si besoin.</li>
+						<li>Elle affiche un message de confirmation (avec le texte du message envoyé) et propose de réessayer  (appel à la servlet Producteur) ou de consulter les messages envoyés (appel à la servlet Consommateur).</li>
+					</ul>								
+				</div>
+			</div>
+			<div class="panel panel-default panel-primary" id="t22">
+				<div class="panel-heading">
+					<h3 class="panel-title">Servlet Producteur <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Editez la classe <b>com.exo.jms.servlet.JmsProducer</b>. Elle hérite de AbstractJmsServlet. Son rôle est de récupérer le message tapé dans la page <i>envoyer.jsp</i> et d'envoyer le message au serveur JMS.</p>
+					<p>La servlet AbstractJmsServlet contient les constantes d'accès au serveur JMS ainsi qu'une méthode getJmsFactory donnant directement un objet ConnectionFactory. Elle nous servira pour les deux servlet 
+					JmsProducer et JmsConsumer.</p>
+					<ul>
+						<li>Modifiez le formulaire de la JSP  <b>envoyer.jsp</b> afin que son attribut action pointe vers votre servlet. </li>
+						<li>Ajoutez dans sa méthode <i>doPost</i> le traitement suivant : <br/>
+							Récupération et ouverture de la connexion auprès de la factory JMS :
+<pre>
+  ...
+  javax.jms.<a target="_blank" href="https://docs.oracle.com/javaee/7/api/javax/jms/Connection.html">Connection</a> connection = this.getJmsFactory().createConnection();
+  connection.start();
+  ...</pre>
+							Récupération d'une session JMS auprès de la connexion :
+<pre>
+  ...
+  javax.jms.<a target="_blank" href="https://docs.oracle.com/javaee/7/api/javax/jms/Session.html">Session</a> session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+  ...</pre>
+							Définition de la destination des messages, ici une queue (vous pouvez changer son nom si vous voulez) :
+<pre>
+  ...
+  javax.jms.<a target="_blank" href="https://docs.oracle.com/javaee/7/api/javax/jms/Destination.html">Destination</a> destination = session.createQueue("jmsj2ee.queue");
+  ...</pre>
+							Définition du producteur de messages associé à cette destination :
+<pre>
+  ...
+  javax.jms.<a target="_blank" href="https://docs.oracle.com/javaee/7/api/javax/jms/MessageProducer.html">MessageProducer</a> producer = session.createProducer(destination);
+  producer.setDeliveryMode(<a target="_blank" href="https://docs.oracle.com/javaee/7/api/javax/jms/DeliveryMode.html">DeliveryMode</a>.NON_PERSISTENT);  
+  ...</pre>  
+							Récupérez le paramètre de formulaire contenant le texte du message et fabriquez un message JMS avant de l'envoyer via le producteur :
+<pre>
+  ...
+  SimpleDateFormat sdf = ...;
+  String text = request.getParameter("textMessage") + " [" + sdf.format(new Date()) + "]";
+  javax.jms.<a target="_blank" href="https://docs.oracle.com/javaee/7/api/javax/jms/TextMessage.html">TextMessage</a> message = session.createTextMessage(text);
+  producer.send(message);
+  ...</pre>  					
+						</li>
+						<li>En cas d'erreur, sauvegardez l'erreur en tant qu'attribut de request et allez vers la page JSP dédiée <b>erreur_e.jsp</b>. </li>
+						<li>Si tout va bien, sauvegardez le texte du message en tant qu'attribut de request et allez vers la JSP dédiée <b>confirmation_e.jsp</b>.</li>
+						<li><u>Quoi qu'il arrive</u>, fermez producer, session et connection</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t3"><span class="label label-default">3</span> Consommateur</h2>
+			<div class="panel panel-default panel-primary" id="t31">
+				<div class="panel-heading">
+					<h3 class="panel-title">Servlet Consommateur <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Editez la classe <b>com.exo.jms.servlet.JmsConsumer</b>. Elle hérite de AbstractJmsServlet. Son rôle est de récupérer tous les messages sur le serveur JMS et de les envoyer à la JSP pour affichage.</p>
+					<ul>
+						<li>Modifiez le lien de la JSP <b>confirmation_e.jsp</b> afin qu'il pointe vers votre servlet. </li>
+						<li>Ajoutez dans sa méthode <i>doGet</i> le traitement suivant : <br/>
+							Récupération et ouverture de la connexion auprès de la factory JMS. <br/>
+							Récupération d'une session auprès de la connexion. <br/>
+							Définition de la destination des messages, ici une queue (avec le même nom que celle du producteur). <br/>
+							Définition du consommateur associé à cette destination :
+<pre>
+  ...
+  javax.jms.<a target="_blank" href="https://docs.oracle.com/javaee/7/api/javax/jms/MessageConsumer.html">MessageConsumer</a> consumer = session.createConsumer(destination);
+  ...</pre>  
+							Récupérez de tous les messages et stockage du texte du message dans une liste :
+<pre>
+  ...
+  List&lt;String&gt; tousLesMessages = new ArrayList&lt;String&gt;();
+  <a target="_blank" href="https://docs.oracle.com/javaee/7/api/javax/jms/Message.html">Message</a>
+ message = null;
+  do {
+    message = consumer.receive(500);
+    if (message instanceof <a target="_blank" href="https://docs.oracle.com/javaee/7/api/javax/jms/TextMessage.html">TextMessage</a>) {
+      TextMessage tm = (TextMessage) message;
+      tousLesMessages.add(tm.getText());
+    }
+  } while (message != null);
+...</pre>  					
+						</li>
+						<li>En cas d'erreur, sauvegardez l'erreur en tant qu'attribut de request et allez vers la page JSP dédiée <b>erreur_c.jsp</b>. </li>
+						<li>Si tout va bien, sauvegardez la liste en tant qu'attribut de request et allez vers la JSP dédiée <b>recevoir.jsp</b>. </li>
+						<li><u>Quoi qu'il arrive</u>, fermez consumer, session et connection</li>
+					</ul>
+				</div>
+			</div>
+			<div class="panel panel-default panel-primary" id="t32">
+				<div class="panel-heading">
+					<h3 class="panel-title">JSP Consommateur <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Réalisez une JSP <b>recevoir.jsp</b>. Elle va nous permettre d'afficher la liste des messages qui sera envoyé par la servlet Consommateur.</p>
+					<p>Vous pouvez vous inspirer de la page HTML recevoir.html qui se trouve dans le dossier WebContent du projet. </p>
+					<ul>
+						<li>Faites usage des JSTL si besoin.</li>
+						<li>Si pas de message, afficher un texte informatif, sinon listez tous les messages.</li>
+						<li>Branchez les liens vers les servlet associées.</li>					
+					</ul>
+					<p>Réalisez une JSP <b>erreur_c.jsp</b>. Elle nous servira pour afficher les erreurs potentielles levées par la servlet Consommateur.</p>
+					<ul>
+						<li>Faites usage des JSTL si besoin.</li>
+						<li>Afficher le message d'erreur (envoyé par la servlet Consommateur) et proposez de réessayer.</li>					
+					</ul>				
+				</div>
+			</div>
+		</section>
+
+		<nav>
+			<ul class="pager">
+				<li class="previous" title="Filter-Listener"><a href="../Exo05-Filter-Listener/Exo05.html"><span aria-hidden="true">&larr;</span> Exercice Précédent</a></li>
+			</ul>
+		</nav>
+
+		<br/><br/>
+		<footer>
+			<p class="text-center">
+				<a href="http://validator.w3.org/">
+					<img src="../bootstrap-3.3.7-dist/img/HTML5_Logo_32.png" alt="Valid HTML 5.0" />
+				</a><br/>
+				Copyright <span class="glyphicon glyphicon-copyright-mark"></span> <a href="http://ferretrenaud.fr" target="_blank">Ferret Renaud</a> 2013
+			</p>
+		</footer>
+
+		<script src="../bootstrap-3.3.7-dist/js/jquery.min.js"></script>
+		<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	</body>
+</html>
+

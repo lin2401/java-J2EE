@@ -1,0 +1,334 @@
+<!--
+	Copyright 2013
+	Ferret Renaud
+	admin@ferretrenaud.fr
+-->
+
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="Author" content="FERRET Renaud"/>
+		<meta name="Description" content="Exercice de formation"/>
+		<meta name="copyright" content="(C) Copyright 2013 FERRET Renaud"/>
+		<meta name="distribution" content="global"/>
+
+		<title>Java JEE - Exercice 1 - Servlet</title>
+
+		<link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+		<!-- Ne pas voir les liens lors de l'impressions -->
+		<style>
+			@media print {
+				a[href]:after {
+					content: none;
+				}
+			}
+		</style>
+		<!--[if lt IE 9]>
+			<script src="../bootstrap-3.3.7-dist/js/html5shiv.min.js"></script>
+			<script src="../bootstrap-3.3.7-dist/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="container">
+		<nav class="navbar navbar-default navbar-right" id="top">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="#" title="JEE - Exercice 1">JEE E1</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			  <ul class="nav navbar-nav">
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">1 - Installation<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t11">1-1 Installation d'un serveur JEE</a></li>
+					<li><a href="#t12">1-2 Paramétrage Eclipse</a></li>
+					<li><a href="#t13">1-3 Installation de la base de données</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">2 - Premier projet Web<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+				  	<li><a href="#t21">2-1 Rappel Maven</a></li>
+					<li><a href="#t22">2-2 Importation du projet</a></li>
+					<li><a href="#t23">2-3 Présentation du projet</a></li>
+					<li><a href="#t24">2-4 Déploiement</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3 - Servlet<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t31">3-1 Servlet Client</a></li>
+					<li><a href="#t32">3-2 Servlet Compte</a></li>
+					<li><a href="#t33">3-3 Test</a></li>
+				  </ul>
+				</li>
+			  </ul>
+			</div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		<br/>
+		<div class="page-header">
+			<h1>Java JEE - Exercice 1 - Servlet</h1>
+			<p>Première application Web en Java et manipulation des Servlets.</p>
+			<p>Important : cet exercice n'est pas à reproduire dans un projet réel, il est en l'état absolument pas sécurisé. </p>
+			<nav>
+				<ul class="pager">
+					<li class="next" title="JSP"><a href="../Exo02-Banque%20JSP/Exo02.html">Exercice Suivant <span aria-hidden="true">&rarr;</span></a></li>
+				</ul>
+			</nav>
+		</div> <!-- page header -->
+
+		<section>
+			<h2 id="t1"><span class="label label-default">1</span> Installation</h2>
+			<div class="panel panel-default panel-primary" id="t11">
+				<div class="panel-heading">
+					<h3 class="panel-title">Installation d'un serveur JEE <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Récupérez la version de Tomcat qui vous concerne sur <a href="http://tomcat.apache.org/" target="_blank">Apache Tomcat</a></p>
+					<p>Installez en suivant les instructions (cas du exe) ou dé zippez l'archive où vous voulez.</p>
+					<p>Vérifiez que vous avez bien une variable système JAVA_HOME qui pointe vers votre JDK. (ex: JAVA_HOME=C:\Program Files\Java\jdk1.8.0_121). </p>
+          <p>Remarque : pour le moment, il n'est pas conseillé de faire usage de Java 9 pour des problèmes de compatibilité avec Maven. </p>
+					<p>Dans le cas d'une utilisation avec Eclipse, l'installation s'arrêtera là, sinon vous pouvez faire un premier lancement en exécutant le scripte [TOMCAT_HOME]/bin/startup.bat(.sh), puis lancer votre navigateur sur <a href="http://localhost:8080" target="_blank">http://localhost:8080</a> </p>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t12">
+				<div class="panel-heading">
+					<h3 class="panel-title">Paramétrage Eclipse <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Allez dans le menu Window/Preferences, puis tapez <i>encoding</i> dans le filtre en haut à gauche.</p>
+					<img src="../bootstrap-3.3.7-dist/img/peclipse00b.png" class="center-block img-responsive" alt="Encoding" />
+					<p>Si vous n'êtes pas en UTF-8, placez-vous en UTF-8 pour Workspace, CSS, HTML et JSP.</p>
+					<p>Faites Apply (en bas à droite), puis effacez votre filtre (<i>encoding</i>), allez sur Java/Installed JREs</p>
+					<p>Vérifiez que vous pointez bien sur un JDK et pas un JRE. Le cas échéant modifiez votre chemin afin de pointer vers un JDK. </p>
+					<img src="../bootstrap-3.3.7-dist/img/peclipse00.png" class="center-block img-responsive" alt="JDK et pas JRE" />
+					<p>N'oubliez pas de faire Apply. </p>
+					<br/>
+					<p>Il faut maintenant indiquer à Eclipse où se trouve votre Tomcat.  Notez que Eclipse supporte plusieurs versions de serveurs JEE, vous pouvez en utiliser autant que vous voulez sans problème.</p>
+					<p>Allez dans le menu Window/Preferences, puis l'onglet Server/Runtime Environement</p>
+					<img src="../bootstrap-3.3.7-dist/img/peclipse01.png" class="center-block img-responsive" alt="Nouveau serveur" />
+					<p>Cliquez sur le bouton Add.... </p>
+					<img src="../bootstrap-3.3.7-dist/img/peclipse02.png" class="center-block img-responsive" alt="Prendre Tomcat" />
+					<p>Sélectionnez la version de votre Tomcat, faites suivant</p>
+					<p>Indiquez un nom, ainsi que le chemin d'installation de votre Tomcat. Ne changez pas le <i>Name</i> choisit par Eclipse.</p>
+					<img src="../bootstrap-3.3.7-dist/img/peclipse03.png" class="center-block img-responsive" alt="Valider" /> <br/>
+					<p>Si vous le désirez, vous pouvez indiquer une version de machine virtuelle à utiliser pour lancer votre Tomcat.</p>
+					<p>Faites Finish.</p>
+          <p>Remarque : vous pouvez faire usage d'un Tomcat 8.5 si vous le souhaitez. Vous ne pourrez pas faire du Tomcat &lt; 8 (nous sommes en JEE 3.1).</p>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t13">
+				<div class="panel-heading">
+					<h3 class="panel-title">Installation de la base de données <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Installez une base MySQL sur votre ordinateur, téléchargez MySQL sur <a href="http://dev.mysql.com/downloads/" target="_blank">http://dev.mysql.com/downloads/</a></p>
+					<p>Lors de l'installation, notez bien le mot de passe que vous aurez choisi pour l'utilisateur root. </p>
+					<p>Lancez l'utilitaire Workbench et importez la base qui se trouve dans le dosser db de l'exercice, fichier banque.sql. </p>
+					<img src="../bootstrap-3.3.7-dist/img/db00.png" class="center-block img-responsive" alt="Base banque" />
+					<p>La base se compose de trois tables, un utilisateur peut posséder des comptes. Un compte n'appartient qu'a un seul utilisateur. Les comptes peuvent générer des opérations. Une opération n'est liée qu'a un seul compte. </p>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t2"><span class="label label-default">2</span> Premier projet Web</h2>
+			<div class="panel panel-default panel-primary" id="t21">
+				<div class="panel-heading">
+					<h3 class="panel-title">Rappel Maven <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>L'outil  <a href="https://maven.apache.org/" title="Voir Maven" target="_blank">Maven</a> permet de paramétrer un projet de manière neutre (c.a.d qui n'est pas associé à un outil de développement spécifique). </p>
+					<p>Les projets de cette formation sont réalisés en Maven afin de vous familiariser avec cette technique qui est la plus répandue actuellement. </p>
+					<p>Toutes les librairies qui seront nécessaires à nos projets seront automatiquement téléchargées d'internet grâce à Maven. </p>
+					<p>Toutes les informations associées aux paramétrages de votre projet seront dans le fichier pom.xml qui se trouve à la racine du projet. </p>
+					<p>La balise XML &lt;artifactId&gt; dans votre fichier pom.xml doit correspondre au context root de votre application. Le context root est le nom qui apparait dans l'URL juste après celui du serveur JEE.</p>
+					<p>Si vous modifiez le fichier pom.xml, vous devez faire un clic droit sur <b>votre projet</b> puis <b>Maven - Update Project...</b> afin qu'Eclipse prenne en compte les modifications.</p>
+					<p>L'ensemble des librairies nécessaires seront placées sur votre disque dur dans le dossier [utilisateur]/.m2. Dans de rare cas, si Maven ne marche plus, pensez à l'effacer. </p>
+					<p>L'arborescence d'un projet Maven web est la suivante :</p>
+					<ul>
+						<li>votre code web (qui touche à la présentation) (.jsp, .html, .css, .js, Images, ...) ira dans src\main\webapp</li>
+						<li>votre code Java (entre autre vos Servlet) (fichiers .java, ...) ira dans src\main\java</li>
+						<li>vos fichiers de configurations (log, properties, ...) iront dans src\main\resources</li>
+						<li>vos librairies de code (fichiers .jar) devront être déclarées en tant que dépendances Maven</li>
+						<li>votre fichier web.xml est dans src\main\webapp\WEB-INF</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t22">
+				<div class="panel-heading">
+					<h3 class="panel-title">Importation du projet <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Dans le menu Eclipse, sélectionnez File/Import puis <b>Existing Maven Projects</b></p>
+					<p>Pointez vers le projet existant contenu dans cet exercice.</p>
+					<p>Après l'import (qui peut durer quelques minutes, regardez la barre verte en bas à droite de votre Eclipse), faites un clic droit sur le projet, puis <b>Maven - Update Project</b>.
+					<img src="../bootstrap-3.3.7-dist/img/eclipse04.png" class="center-block img-responsive" alt="Maven Update" /></p>
+					<p>Ensuite, faites un clic droit sur votre fichier pom.xml puis <b>Run As - Maven Build</b>, tapez <i>package</i> dans la zone Goals (celle qui a le focus à l'ouverture de la fenêtre).</p>
+					<p>Vérifiez que tout compile (pas de [ERROR] dans la console Maven et un BUILD SUCCESS à la fin).</p>
+					<p>Maintenant, faites un clic droit sur le projet, puis <b>Properties</b> (tout en bas)</p>
+					<p>Dans l'onglet <b>Targeted Runtime</b>, cochez votre version de Tomcat.</p>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t23">
+				<div class="panel-heading">
+					<h3 class="panel-title">Présentation du projet <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Il y a déjà du code dans le projet que vous récupérez. </p>
+					<p>Allez dans Java Resources/src/main/java. </p>
+					<p>Dans le package fr.banque vous trouverez tout ce qui touche aux objets entités. Ce sont des objets qui représentent les données en base.
+					<img src="../bootstrap-3.3.7-dist/img/banque00.png" class="center-block img-responsive" alt="Entités" />
+					</p>
+					<p>Dans le package fr.bd vous trouverez la classe AccesBD.
+					<img src="../bootstrap-3.3.7-dist/img/banque01.png" class="center-block img-responsive" alt="AccesBD" />
+					Son rôle est un mixte entre DAO et services métiers, elles portent toute l'intelligence du code. </p>
+					<p>Exemple d'utilisation d'AccesBD :</p>
+<pre>
+public static void main(String[] args) {
+  final String dbDriver = "com.mysql.jdbc.Driver";
+  final String dbUrl = "jdbc:mysql://localhost/banque?useSSL=false";
+  final String dbLogin = "root";
+  final String dbPwd = "";
+  AccesBD bd = null;
+  try {
+    bd = new AccesBD(dbDriver);
+    bd.seConnecter(dbUrl, dbLogin, dbPwd);
+
+    // En Mapping maintenant
+    System.out.println("\nMapping Objet");
+    List&lt;Client&gt; lClient = bd.selectUtilisateur();
+    for(Client client : lClient) {
+      System.out.println(client);
+    }
+  } catch (SQLException e) {
+    e.printStackTrace();
+  } finally {
+    if (bd != null) {
+      bd.seDeconnecter();
+    }
+  }
+}
+</pre>
+					<p>Des classes Servlet sont déjà présentent dans le package fr.web, mais elles ne font rien pour le moment. </p>
+				</div>
+			</div>
+			<div class="panel panel-default panel-primary" id="t24">
+				<div class="panel-heading">
+					<h3 class="panel-title">Déploiement <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Afin de pouvoir tester votre projet via un navigateur Web, vous devrez créer une instance de serveur et y déployer votre projet.</p>
+					<p>En perspective Java EE, allez sur l'onglet Server (en bas)
+					<img src="../bootstrap-3.3.7-dist/img/we00.png" class="center-block img-responsive" alt="Nouvelle instance" /></p>
+					<p>Sélectionnez votre serveur, puis faites Next
+					<img src="../bootstrap-3.3.7-dist/img/we01.png" class="center-block img-responsive" alt="Nouvelle instance" /></p>
+					<p>Ajoutez votre projet au serveur en le sélectionnant et en cliquant sur le bouton Add
+					<img src="../bootstrap-3.3.7-dist/img/we02.png" class="center-block img-responsive" alt="Application ajoutée" /></p>
+					<p>Pour démarrer le serveur, vous pouvez faire un clic droit dessus puis Start, vous pouvez aussi vous positionner sur un élément Web (Servlet, JSP, page HTML) et faire un clic droit puis Run As - Run on server</p>
+					<p>Lisez toujours attentivement ce que vous raconte Tomcat quand il démarre. </p>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t3"><span class="label label-default">3</span> Servlet</h2>
+			<div class="panel panel-default panel-primary" id="t31">
+				<div class="panel-heading">
+					<h3 class="panel-title">Servlet Client <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Dans un premier temps, nous allons coder de manière simplifiée et ne réaliser que des Servlets.</p>
+					<p>Editez la classe fr.web.ServletClient. </p>
+					<p>On souhaite fabriquer une page web qui représente tous les clients. Dans la méthode service ou doGet ou doPost vous allez écrire le code qui va</p>
+					<ul>
+						<li>Se connecter à la base de données</li>
+						<li>Exécuter une requête qui récupère tous les utilisateurs. </li>
+						<li>Parcourir le résultat et fabriquer un flux HTML qui ressemblera à <a href="exempleClients.html">exempleClients.html</a>. </li>
+						<li>Se déconnecter de la base de données</li>
+						<li>Ecrire le flux sur la réponse</li>
+					</ul>
+					<p>Notez que l'accès à la base de données se fera par le biais de la classe fr.banque.AccesBD. <b>Lisez</b> sa documentation pour voir comment elle fonctionne. </p>
+					<p>Notez aussi que dans le flux de retour on a un formulaire qui doit nous permettre de voir les comptes du client, il contient donc un paramètre qui va contenir l'id du client.</p>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t32">
+				<div class="panel-heading">
+					<h3 class="panel-title">Servlet Compte <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Editez la classe servlet fr.web.ServletCompte. </p>
+					<p>On souhaite fabriquer une page web qui représente tous les comptes d'un client donné. Dans la méthode service ou doGet ou doPost vous allez écrire le code qui va</p>
+					<ul>
+						<li>Récupérer le paramètre qui contient l'id du client</li>
+						<li>Se connecter à la base de données</li>
+						<li>Exécuter une requête qui récupère tous les comptes associés à l'utilisateur. </li>
+						<li>Parcourir le résultat et fabriquer un flux HTML qui ressemblera à <a href="exempleComptes.html">exempleComptes.html</a>. </li>
+						<li>Se déconnecter de la base de données</li>
+						<li>Ecrire le flux sur la réponse</li>
+					</ul>
+					<p>L'accès à la base de données se fera toujours par le biais de la classe fr.banque.AccesBD. </p>
+					<p>Attention : vous êtes en polymorphisme sur la manipulation de la liste des comptes. N'oubliez pas qu'il existe plusieurs types de compte. </p>
+					<p><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <b>Question</b> : peut-on trouver un attribut à cette servlet ?</p>
+					<p><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <b>Question</b> : peut-on trouver un héritage à cette servlet ?</p>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t33">
+				<div class="panel-heading">
+					<h3 class="panel-title">Test <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+				<p>Pour tester votre code, créer une instance de serveur puis ajoutez votre projet comme application à y déployer.</p>
+				<p>Lancez votre serveur, puis allez sur l'URL qui caractérise votre application : http://localhost:8080/<i>NomDeVotreContext</i>/<i>NomDeMappingDeVotreServlet</i></p>
+				<p>Rappels :</p>
+				<ul>
+					<li>ATTENTION aux majuscules/minuscules</li>
+					<li>le <i>NomDeVotreContext</i> est spécifié dans les propriétés du projet, section <b>Web Project Settings</b> (en principe c'est en01.servlet).
+                    Dans le cas des projets Maven, il est aussi lié à votre artefactId. <br/>
+					Pour retrouver son nom de <i>context root</i>, faire un clic droit sur son projet puis Properties, allez dans Web Project Settings.</li>
+					<li>le <i>NomDeMappingDeVotreServlet</i> est spécifié dans le fichier web.xml ou dans l'annotation @WebServlet de votre servlet (en principe c'est ServletClient et ServletCompte).</li>
+				</ul>
+				<p>Ce qui peut donner <a href="http://localhost:8080/en01.servlet/ServletClient" target="_blank">http://localhost:8080/en01.servlet/ServletClient</a>.</p>
+				</div>
+			</div>
+
+		</section>
+
+		<nav>
+			<ul class="pager">
+				<li class="next" title="JSP"><a href="../Exo02-Banque%20JSP/Exo02.html">Exercice Suivant <span aria-hidden="true">&rarr;</span></a></li>
+			</ul>
+		</nav>
+
+		<br/><br/>
+		<footer>
+			<p class="text-center">
+				<a href="http://validator.w3.org/">
+					<img src="../bootstrap-3.3.7-dist/img/HTML5_Logo_32.png" alt="Valid HTML 5.0" />
+				</a><br/>
+				Copyright <span class="glyphicon glyphicon-copyright-mark"></span> <a href="http://ferretrenaud.fr" target="_blank">Ferret Renaud</a> 2013
+			</p>
+		</footer>
+
+		<script src="../bootstrap-3.3.7-dist/js/jquery.min.js"></script>
+		<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	</body>
+</html>
+

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Historique de vos operations.</title>
+  <link href="../css/bootstrap.min.css"  rel="stylesheet" />
+  <link href="../css/banque.css"         rel="stylesheet" />
+  <link href="../css/jquery-ui.min.css"  rel="stylesheet" />
+
+
+  <!--[if lt IE 9]>
+      <script src="../js/html5shiv.3.7.3.min.js"></script>
+      <script src="../js/respond.1.4.2.min.js"></script>
+  <![endif]-->
+
+  <script src="../js/jquery.1.12.4.min.js"></script>
+  <script src="../js/jquery-ui.min.js"></script>
+  <script src="../js/i18n/datepicker-fr.js"></script>
+  <script>
+  $(function() {
+    $("#inDateDebut").datepicker({
+      showOn: "button",
+      buttonImage: "../images/date_icon.gif",
+      buttonImageOnly: true,
+      buttonText: "Selectionner une date",
+      dateFormat: "yy/mm/dd",
+      regional: "fr",
+      showWeek: true,
+      firstDay: 1
+    });
+    $("#inDateFin").datepicker({
+      showOn: "button",
+      buttonImage: "../images/date_icon.gif",
+      buttonImageOnly: true,
+      buttonText: "Selectionner une date",
+      dateFormat: "yy/mm/dd",
+      regional: "fr",
+      showWeek: true,
+      firstDay: 1
+    });
+  });
+  </script>
+
+</head>
+
+<body class="container-fluid elbody">
+  <span id="gatling_historique" style="display: none;"></span>
+  <!-- jmeter:historique -->
+  <div class="row">
+    <header class="col-sm-12 hidden-xs">
+      <img src="../images/image-bienvenue.jpg" alt="" class="img-responsive center-block" />
+    </header>
+
+    <section class="col-xs-12 col-sm-8 col-sm-offset-2" style="margin-top: 25px">
+
+      <!-- Exemple de messages -->
+      <div class="alert alert-danger">Problème</div>
+      <div class="alert alert-success">Tout va bien</div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading text-center">Indiquez vos critères de recherche</div>
+        <div class="panel-body">
+          <form id="frmListeOperations" name="frmListeOperations" action="#" method="post">
+
+            <input type="hidden" name="inNumeroCompte" value="12" />
+
+            <table class="table table-bordered jaune">
+              <thead class="bg-info">
+                <tr>
+                  <th class="text-center" style="width: 60%">Date</th>
+                  <th class="text-center" style="width: 40%">Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-center">
+                    <label for="inDateDebut">Du</label> <input type="text" id="inDateDebut" name="inDateDebut" maxlength="10" size="10" value="" style="margin-right: 5px" />
+                    <label for="inDateFin" style="margin-left: 20px">Au</label> <input type="text" name="inDateFin" id="inDateFin" maxlength="10" size="10" value="" style="margin-right: 5px"/>
+                  </td>
+                  <td class="text-center">
+                    <label for="inCredit">Crédit</label>
+                    <input type="checkbox" name="inCredit" id="inCredit"  value="true"/>
+                    <br/>
+                    <label for="inDebit">Débit</label>
+                    <input type="checkbox" name="inDebit" id="inDebit"  value="true"/>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="form-group">
+              <div class="col-xs-2 col-xs-offset-3 col-sm-offset-5">
+                <button class="btn btn-primary" type="submit">Rechercher</button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="col-xs-12 col-sm-8 col-sm-offset-2">
+
+      <div class="panel panel-default">
+        <div class="panel-heading text-center">Historique de vos op&eacute;rations effectu&eacute;es sur le compte n&deg; 12</div>
+        <div class="panel-body">
+
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+              <caption></caption>
+              <thead class="bg-info">
+                <tr>
+                  <th class="text-center" style="width: 25%">Date</th>
+                  <th class="text-center" style="width: 60%">Libell&eacute;</th>
+                  <th class="text-center" style="width: 15%">Montant</th>
+                </tr>
+              </thead>
+              <tfoot></tfoot>
+              <tbody>
+
+                <tr class="ellignetableau2">
+                  <td class="ellibelletableau text-center">13/02/2015 14:10:52</td>
+                  <td class="ellibelletableau">Transaction avec le comte 15</td>
+                  <td class="ellibelletableau text-center">50.0 €</td>
+                </tr>
+
+                <tr class="ellignetableau1">
+                  <td class="ellibelletableau text-center">01/01/2015 00:00:00</td>
+                  <td class="ellibelletableau">Retrait</td>
+                  <td class="ellibelletableau text-center">-500.0 €</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <div class="form-group" style="margin-top: 15px">
+            <div class="col-xs-2 col-xs-offset-1 col-sm-offset-3">
+              <a class="btn btn-primary" href="../menu.html">Menu</a>
+            </div>
+            <div class="col-xs-2 col-xs-offset-3">
+              <a class="btn btn-primary" href="./liste.html">Liste</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../js/bootstrap.min.js"></script>
+
+</body>
+</html>

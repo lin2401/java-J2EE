@@ -1,0 +1,214 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>fr.exo.jms</groupId>
+  <!-- ATTENTION : artifactId = context root -->
+  <artifactId>en06.jms</artifactId>
+  <!-- Nous sommes en projet WEB -->
+  <packaging>war</packaging>
+  <version>1.0.0</version>
+  <description>Exemple d'utilisation de JMS avec ActiveMQ. Ennoncé</description>
+
+  <developers>
+    <developer>
+      <id>rf</id>
+      <name>Ferret Renaud</name>
+      <email>admin@ferretrenaud.fr</email>
+      <url>http://ferretrenaud.fr</url>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>Simple Machines License</name>
+      <url>http://www.simplemachines.org/about/smf/license.php</url>
+    </license>
+  </licenses>
+
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <version.mysql>5.1.46</version.mysql>
+    <version.log4j2>2.11.0</version.log4j2>
+    <version.javaee-web-api>7.0</version.javaee-web-api>
+    <!-- La JSTL -->
+    <version.jstl>1.2</version.jstl>
+
+    <version.junit>4.12</version.junit>
+    <version.activemq>5.15.4</version.activemq>
+    <version.slf4j>1.7.25</version.slf4j>
+
+    <!-- https://maven.apache.org/plugins/index.html -->
+    <maven-compiler-plugin-version>3.7.0</maven-compiler-plugin-version>
+    <maven-war-plugin-version>3.2.2</maven-war-plugin-version>
+    <maven-surefire-plugin-version>2.22.0</maven-surefire-plugin-version>
+    <jacoco-maven-plugin-version>0.8.1</jacoco-maven-plugin-version>
+
+    <!-- Sonar -->
+    <sonar.scm.disabled>true</sonar.scm.disabled>
+    <sonar.java.source>${maven.compiler.source}</sonar.java.source>
+    <sonar.sourceEncoding>${project.build.sourceEncoding}</sonar.sourceEncoding>
+    <sonar.junit.reportsPath>${basedir}/target/surefire-reports</sonar.junit.reportsPath>
+    <sonar.jacoco.reportPaths>${basedir}/target/jacoco.exec</sonar.jacoco.reportPaths>
+  </properties>
+
+  <build>
+    <!-- Afin d'avoir un WAR qui porte le nom de l'artefact id -->
+    <!-- Sans qu'il ajoute automatiquement le numero de version -->
+    <finalName>${project.artifactId}</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin-version}</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>${maven-war-plugin-version}</version>
+        <configuration>
+          <additionalProjectFacets>
+            <!-- Pour Eclipse -->
+            <java>${maven.compiler.target}</java>
+            <jst.web>3.1</jst.web>
+          </additionalProjectFacets>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin-version}</version>
+      </plugin>
+
+      <!-- http://www.eclemma.org/jacoco/trunk/doc/maven.html -->
+      <!-- Lancera l'analyse de couverture du code -->
+      <!-- Ne pas oublier de lancer une build (package ou test) avant de lancer sonar -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco-maven-plugin-version}</version>
+        <configuration>
+          <destFile>${sonar.jacoco.reportPaths}</destFile>
+          <dataFile>${sonar.jacoco.reportPaths}</dataFile>
+        </configuration>
+        <executions>
+          <execution>
+            <id>jacoco-initialize</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>jacoco-site</id>
+            <phase>package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${version.slf4j}</version>
+      </dependency>
+
+      <!-- Log4J2 -->
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-bom</artifactId>
+        <version>${version.log4j2}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>1.2</version>
+      </dependency>
+      <!-- Pour le test -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${version.junit}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- Active MQ -->
+      <dependency>
+        <groupId>org.apache.activemq</groupId>
+        <artifactId>activemq-broker</artifactId>
+        <version>${version.activemq}</version>
+      </dependency>
+
+      <!-- En J2EE 7 -->
+      <dependency>
+        <groupId>javax</groupId>
+        <artifactId>javaee-web-api</artifactId>
+        <version>${version.javaee-web-api}</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>jstl</artifactId>
+        <version>${version.jstl}</version>
+      </dependency>
+
+
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <!-- Active MQ -->
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-broker</artifactId>
+    </dependency>
+
+    <!-- En J2EE 7 -->
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-web-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+    </dependency>
+
+    <!-- Pour le test -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+
+    <!-- Log4J2 -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-web</artifactId>
+    </dependency>
+    <!-- Active MQ fait usage de slf4j -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+    </dependency>
+
+  </dependencies>
+</project>

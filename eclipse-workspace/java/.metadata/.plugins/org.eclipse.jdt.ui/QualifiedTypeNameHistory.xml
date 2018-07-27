@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="fr.exemple.Personne"/>
+<fullyQualifiedTypeName name="fr.dessin.Point2D"/>
+<fullyQualifiedTypeName name="fr.banque.Client"/>
+<fullyQualifiedTypeName name="fr.banque.BanqueException"/>
+<fullyQualifiedTypeName name="java.beans.Statement"/>
+<fullyQualifiedTypeName name="java.sql.Statement"/>
+<fullyQualifiedTypeName name="fr.banque.Compte"/>
+<fullyQualifiedTypeName name="fr.banque.CompteASeuil"/>
+<fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+<fullyQualifiedTypeName name="fr.banque.CompteASeuilRemunure"/>
+<fullyQualifiedTypeName name="fr.banque.CompteRemunere"/>
+<fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
+</qualifiedTypeNameHistroy>

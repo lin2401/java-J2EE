@@ -1,0 +1,17 @@
+table.jaune {
+  background-color: rgb(250, 230, 160);
+}
+
+body.elbody {
+  background: url("../images/image-fond.jpg");
+}
+
+tr.elLigneTableau1 {
+  border: 1px solid black;
+  background: #aabac5;
+}
+
+tr.elLigneTableau2 {
+  border: 1px solid black;
+  background: #f7b260;
+}

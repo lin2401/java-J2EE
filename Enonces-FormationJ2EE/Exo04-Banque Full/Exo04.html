@@ -1,0 +1,422 @@
+<!--
+	Copyright 2013
+	Ferret Renaud
+	admin@ferretrenaud.fr
+-->
+
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="Author" content="FERRET Renaud"/>
+		<meta name="Description" content="Exercice de formation"/>
+		<meta name="copyright" content="(C) Copyright 2013 FERRET Renaud"/>
+		<meta name="distribution" content="global"/>
+
+		<title>Java JEE - Exercice 4 - Banque</title>
+
+		<link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+		<!-- Ne pas voir les liens lors de l'impressions -->
+		<style>
+			@media print {
+				a[href]:after {
+					content: none;
+				}
+			}
+		</style>
+		<!--[if lt IE 9]>
+			<script src="../bootstrap-3.3.7-dist/js/html5shiv.min.js"></script>
+			<script src="../bootstrap-3.3.7-dist/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="container">
+		<nav class="navbar navbar-default" id="top">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="#" title="JEE - Exercice 4">JEE E4</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			  <ul class="nav navbar-nav">
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">1 - Installation<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t11">1-1 Importation du projet</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">2 - Login<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t21">2-1 JSP Login</a></li>
+					<li><a href="#t22">2-2 Servlet Login</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3 - Menu<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t31">3-1 Servlet Menu</a></li>
+					<li><a href="#t32">3-2 JSP Menu</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">4 - Comptes<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t41">4-1 Servlet Compte</a></li>
+					<li><a href="#t42">4-2 JSP Compte</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5 - Historique<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t51">5-1 Servlet Historique</a></li>
+					<li><a href="#t52">5-2 JSP Historique</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">6 - Virement<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t61">6-1 Servlet Virement</a></li>
+					<li><a href="#t62">6-2 JSP Virement</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">7 - Listener - Filter - JUnit <span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t71">7-1 Full</a></li>
+				  </ul>
+				</li>
+			  </ul>
+			</div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		<br/>
+		<div class="page-header">
+			<h1>Java JEE - Exercice 4 - Banque</h1>
+			<p>Nous allons réaliser un site qui gère les comptes bancaires. </p>
+			<p>Nous devrons respecter le MVC et faire usage de la JSTL. </p>
+			<p>Le code métier (couches services et données) est déjà codé, nous allons réaliser la partie web et faire usage du code déjà écrit.</p>
+			<p>Une maquette statique du site est disponible <a href="banque/login.html">ici</a>, vous pouvez vous en inspirer. </p>
+			<p>Important : cet exercice fait usage d'une <a href="https://docs.oracle.com/javase/tutorial/jdbc/basics/sqldatasources.html" target="_blank">DataSource</a> qui est définie dans le fichier <b>src\main\webapp\META-INF\context.xml</b>. Du coup la classe AccesBD ne fonctionne plus de la même manière.</p>
+			<nav>
+				<ul class="pager">
+					<li class="previous" title="MVC JSTL"><a href="../Exo03-Banque%20JSP-Servlet%20JSTL/Exo03.html"><span aria-hidden="true">&larr;</span> Exercice Précédent</a></li>
+					<li class="next" title="Filter-Listener"><a href="../Exo05-Filter-Listener/Exo05.html">Exercice Suivant <span aria-hidden="true">&rarr;</span></a></li>
+				</ul>
+			</nav>
+		</div> <!-- page header -->
+
+		<section>
+			<h2 id="t1"><span class="label label-default">1</span> Installation</h2>
+			<div class="panel panel-default panel-primary" id="t11">
+				<div class="panel-heading">
+					<h3 class="panel-title">Importation du projet <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Importez le projet en04.banque.mvc qui se trouve dans le répertoire de l'énoncé
+					(File/Import -gt; Existing Maven Projects puis indiquez le dossier). </p>
+					<p>Le nom du context root est <b>en04.banque.mvc</b>. Vous trouverez des commentaires dans les classes Java pour vous aider dans l'exercice. </p>
+					<p>Cet exercice fait usage d'une <a href="https://docs.oracle.com/javase/tutorial/jdbc/basics/sqldatasources.html" target="_blank">DataSource</a> qui est définie dans le fichier <b>src\main\webapp\META-INF\context.xml</b>. Du coup la classe AccesBD ne fonctionne plus de la même manière.</p>
+          <p>AccesBD est un <a href="https://fr.wikipedia.org/wiki/Singleton_(patron_de_conception)" target="_blank">singleton</a>. Cet object sera frabriquer 0 ou une fois pour toute la durée de vie du programme. Il n'appartient à personne en particulier. </p>
+					<p>Exemple d'utilisation :</p>
+<pre>
+String login = "df";
+String pwd = "df";
+int userId = AccesBD.getInstance().authentifier(login, pwd);</pre>
+					<p><code>AccesBD.getInstance()</code> récupère l'instance courante du singleton, <code>.authentifier(login, pwd);</code> fait usage de la méthode métier <i>authentifier</i> qui valide qu'un <b>utilisateur de la <u>banque</u></b> peut faire usage du site web. (aucun rapport avec le login/pwd d'accès à la base de données)</p>
+					<p>Respectez bien la mécanique MVC : C -&gt; V -&gt; C -&gt; V -&gt; C -&gt; V -&gt; ...</p>
+          <p>Voici les enchaînements d'écrans :</p>
+					<img src="../bootstrap-3.3.7-dist/img/we03.png" class="center-block img-responsive" alt="Site" />
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t2"><span class="label label-default">2</span> Login</h2>
+			<div class="panel panel-default panel-primary" id="t21">
+				<div class="panel-heading">
+					<h3 class="panel-title">JSP Login <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Editez la page login.html afin de la transformer en une JSP : login.jsp.
+					Elle contient un formulaire qui demande un login et un mot de passe.</p>
+					<p>Pensez à utiliser la JSTL et faites toujours en sorte que les URL (images, CSS, JS, ...) soient fabriqués via un </p>
+<pre>&lt;c:url value="/chemin/mon.gif"/&gt;</pre>
+					<p>Le formulaire aura comme URL d'action la valeur de l'URL du contrôleur de destination (ici la servlet qui s'occupe du login).</p>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t22">
+				<div class="panel-heading">
+					<h3 class="panel-title">Servlet Login <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Editez la servlet <b>fr.web.ServletLogin</b>. Dans la méthode <i>service</i> (ou doGet ou doPost) vous allez écrire le code qui va</p>
+					<ul>
+						<li>Rediriger vers la jsp login.jsp dans doGet
+<pre>
+protected void doGet(<a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html" target="_blank">HttpServletRequest</a> request, <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html" target="_blank">HttpServletResponse</a> response) throws ServletException, IOException {
+  <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html" target="_blank">RequestDispatcher</a> dispatcher = request.getRequestDispatcher("NomEtCheminDeLaPageOuVousVoulezAller.jsp");
+  dispatcher.forward(request, response);
+}</pre>
+						</li>
+						<li>Récupérer les paramètres envoyés par la JSP login.jsp dans doPost
+<pre>
+...
+String monParam1 = request.getParameter("nomDuParamDansLeFormulaireOuLurl");
+...</pre>
+						</li>
+						<li>Vérifier que vos informations ne sont ni nulles, ni vides. </li>
+						<li>Se connecter à la base de données</li>
+						<li>Exécuter une requête qui valide que le login et le password correspondent à un utilisateur et récupérer son ID. </li>
+						<li>S'il n'y a pas de problème, placer cet ID dans la session en tant qu'attribut.
+<pre>
+...
+Integer idUtilisateurTireDeLaBase = <i>leCodeQuiVaLeChercherEnAllantLireLaDocDeAccesBD</i>;
+// Vous pouvez aussi faire usage d'un int a la place de Integer (boxing)
+...
+<a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html" target="_blank">HttpSession</a> session = request.getSession(true);
+session.setAttribute("nomDeVotreClef", idUtilisateurTireDeLaBase);
+...</pre>
+						</li>
+						<li>Si tout va bien rediriger vers la JSP menu (voir suite de l'exercice)
+<pre>
+...
+<a href="http://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html" target="_blank">RequestDispatcher</a> dispatcher = request.getRequestDispatcher("NomEtCheminDeLaPageOuVousVoulezAller.jsp");
+dispatcher.forward(request, response);
+// Pensez a faire un return afin de casser l'execution du code de votre methode
+return;</pre>
+						</li>
+						<li>Si tout va mal, placer un message d'erreur en tant qu'attribut dans la request et rediriger vers la jsp login
+<pre>
+...
+request.setAttribute("nomDeVotreClefErreur", "Votre message d'erreur");
+...</pre>
+						</li>
+					</ul>
+
+					<p>Ajustez le code de la page login.jsp afin qu'elle affiche le message d'erreur s'il y en a un. Faites-le en JSTL ou en Java. </p>
+					<p>Notez que cette servlet ne fabrique pas de flux HTML, elle redirige vers la JSP qui s'en charge. </p>
+					<p>Information concernant l'injection SQL : <a href="http://fr.wikipedia.org/wiki/Injection_SQL">http://fr.wikipedia.org/wiki/Injection_SQL</a></p>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t3"><span class="label label-default">3</span> Menu</h2>
+			<div class="panel panel-default panel-primary" id="t31">
+				<div class="panel-heading">
+					<h3 class="panel-title">Servlet Menu <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Editez la servlet <b>fr.web.ServletMenu</b>. Elle devra</p>
+					<ul>
+						<li>Récupérer de la session l'ID de l'utilisateur connecté se trouvant dans la session,
+<pre>
+...
+// Utilisez un Integer et pas un int
+// Integer : peut être null
+// int : ne peut pas être null
+Integer idUtilisateurDansMaSession = (Integer)request.getSession(true).getAttribute("nomDeVotreClef");
+...</pre>
+						</li>
+						<li>Si l'ID n'est pas présent dans la session, placer un message d'erreur en tant qu'attribut dans la request et rediriger vers la jsp login</li>
+						<li>Si tout va bien, rediriger vers la JSP menu (voir suite de l'exercice)</li>
+					</ul>
+					<p>La servlet Menu sera utilisée dans les JSPs (liste des comptes, historiques, virement) afin de retourner au menu.</p>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t32">
+				<div class="panel-heading">
+					<h3 class="panel-title">JSP Menu <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>La JSP menu ne fera pas grand-chose, à partir d'elle on peut soit aller vers la liste de ses comptes, soit réaliser un virement.</p>
+					<p>Elle peut aussi servir à afficher un message d'erreur ou un message de bienvenue. </p>
+					<ul>
+						<li>Modifiez les URLs de la page afin qu'ils pointent vers vos servlet compte et virement (voir suite de l'exercice)</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t4"><span class="label label-default">4</span> Comptes</h2>
+			<div class="panel panel-default panel-primary" id="t41">
+				<div class="panel-heading">
+					<h3 class="panel-title">Servlet Compte <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Editez la servlet <b>fr.web.ServletCompte</b>. Elle devra</p>
+					<ul>
+						<li>Récupérer de la session l'ID de l'utilisateur connecté se trouvant dans la session,</li>
+						<li>Si l'ID n'est pas présent dans la session, placer un message d'erreur en tant qu'attribut dans la request et rediriger vers la jsp login</li>
+						<li>Sinon, se connecter à la base de données</li>
+						<li>Exécuter une requête qui récupère la liste des comptes de l'utilisateur connecté. </li>
+						<li>Placer le résultat sous la forme d'un objet <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html" target="_blank">java.util.List</a> ou
+						<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html" target="_blank">java.util.Map</a> (éviter les tableaux) dans la request en tant qu'attribut. </li>
+						<li>Si tout va bien alors rediriger vers la JSP comptes/liste.jsp (voir suite de l'exercice)</li>
+					</ul>
+					<p><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <b>Question</b> : Peut-on mettre la liste des comptes dans la session ?</p>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t42">
+				<div class="panel-heading">
+					<h3 class="panel-title">JSP Compte <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>La JSP comptes/liste.jsp devra</p>
+					<ul>
+						<li>Récupérer de la session l'ID de l'utilisateur connecté se trouvant dans la session,</li>
+						<li>Si l'ID n'est pas présent dans la session, placer un message d'erreur en tant qu'attribut dans la request et rediriger vers la jsp login</li>
+						<li>Sinon, récupérer de la request l'objet qui contient les comptes utilisateurs placés par la servlet</li>
+						<li>Parcourir le résultat et l'afficher proprement. Vous aurez à gérer la même problématique de polymorphisme que dans l'exo précédent.</li>
+						<li>Quand on clic sur un compte (son id ou son libellé) on doit aller sur la servlet historique (voir suite de l'exercice)</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t5"><span class="label label-default">5</span> Historique</h2>
+			<div class="panel panel-default panel-primary" id="t51">
+				<div class="panel-heading">
+					<h3 class="panel-title">Servlet Historique <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Editez la servlet <b>fr.web.ServletHistorique</b>. Elle devra :</p>
+					<ul>
+						<li>Récupérer de la session l'ID de l'utilisateur connecté se trouvant dans la session, récupérer aussi l'id du compte (certainement sous la forme d'un paramètre). Regarder si les paramètres associés à la recherche (date de début, date de fin, débit, crédit) sont présents.</li>
+						<li>Si l'un des id (utilisateur ou compte) n'est pas présent, placer un message d'erreur en tant qu'attribut dans la request et rediriger vers la jsp login ou menu. Si un des paramètres de recherche est invalide, placer un message d'erreur en tant qu'attribut dans la request et rediriger vers la jsp historique</li>
+						<li>Sinon, se connecter à la base de données</li>
+						<li>Exécuter une requête qui récupère la liste des opérations effectuées sur le compte ciblé en respectant les critères de recherche (si ils sont présents).
+						Placer le résultat sous la forme d'un objet <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html" target="_blank">java.util.List</a> ou <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html" target="_blank">java.util.Map</a> (éviter les tableaux) dans la request en tant qu'attribut.
+						Ne pas oublier de replacer les critères en tant qu'attribut de la request afin de pouvoir les afficher dans la JSP.</li>
+						<li>Si tout va bien alors rediriger vers la JSP comptes/historique.jsp (voir suite de l'exercice)</li>
+					</ul>
+					<p><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <b>Question</b> : Peut-on mettre la liste des opérations dans la session ?</p>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t52">
+				<div class="panel-heading">
+					<h3 class="panel-title">JSP Historique <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>La JSP comptes/historique.jsp devra</p>
+					<ul>
+						<li>Récupérer de la session l'ID de l'utilisateur connecté</li>
+						<li>Si l'ID n'est pas présent dans la session, placer un message d'erreur en tant qu'attribut dans la request et rediriger vers la jsp login</li>
+						<li>Sinon, récupérer de la request l'objet qui contient les opérations placées par la servlet</li>
+						<li>Parcourir le résultat et l'afficher proprement. </li>
+						<li>Pensez à ne pas perdre les informations qui sont issues des critères de recherche ainsi que l'id du compte. A vous de les replacer comme <i>value</i> de vos champs de formulaires.</li>
+						<li>Ajuster les chemins des boutons, quand on clic sur le bouton de recherche on reppart vers la servlet historique, sinon on part vers la servlet menu. </li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t6"><span class="label label-default">6</span> Virement</h2>
+			<div class="panel panel-default panel-primary" id="t61">
+				<div class="panel-heading">
+					<h3 class="panel-title">Servlet Virement <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Editez la servlet <b>fr.web.ServletVirement</b>. Elle devra :</p>
+					<ul>
+						<li>Récupérer de la session l'ID de l'utilisateur connecté se trouvant dans la session. Récupérer les paramètres du virement si il y en a (id compte source, id compte destination, montant)</li>
+						<li>Si l'ID n'est pas présent dans la session, placer un message d'erreur en tant qu'attribut dans la request et rediriger vers la jsp login</li>
+						<li>Sinon, se connecter à la base de données</li>
+						<li>Si aucun paramètre de virement n'a été trouvé, exécuter une requête qui récupère la liste des comptes de l'utilisateur connecté et placer le résultat sous la forme d'un objet <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html" target="_blank">java.util.List</a> ou <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html" target="_blank">java.util.Map</a> (éviter les tableaux) dans la request en tant qu'attribut.
+						Sinon, vérifier les paramètres et exécuter le virement. </li>
+						<li>Si tout va bien alors rediriger vers la JSP comptes/virement.jsp avec un message de confirmation ou d'erreur si un virement a été réalisé. (voir suite de l'exercice)</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t62">
+				<div class="panel-heading">
+					<h3 class="panel-title">JSP Virement <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>La JSP comptes/historique.jsp devra</p>
+					<ul>
+						<li>Récupérer de la session l'ID de l'utilisateur connecté</li>
+						<li>Si l'ID n'est pas présent dans la session, placer un message d'erreur en tant qu'attribut dans la request et rediriger vers la jsp login</li>
+						<li>Sinon, récupérer de la request les informations placées par la servlet</li>
+						<li>Afficher proprement les informations (messages, liste de comptes, ...). </li>
+						<li>Pensez à ne pas perdre les informations qui sont issues des critères du virement.</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t7"><span class="label label-default">7</span> Full</h2>
+			<div class="panel panel-default panel-primary" id="t71">
+				<div class="panel-heading">
+					<h3 class="panel-title">Listener - Filter - JUnit <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>La correction exo04.banque.mvc.full, reprend le même exercice mais y introduit des éléments supplémentaires :</p>
+					<img src="../bootstrap-3.3.7-dist/img/archi.png" class="center-block img-responsive" alt="Architecture" />
+					<ul>
+						<li>Architecture : Nous sommes toujours en MVC côté IHM, mais la partie métier est découpée en plusieurs couches :
+							<ul>
+								<li>Le package com.banque.entity qui représente les entités (ou DataTransferObject). Un objet par table, une interface pour chaque objet.
+								Les entités n'ont aucune intelligence, elles ne savent que transporter de la donnée qui vient de la base.</li>
+								<li>Le package com.banque.dao qui représente les DataAccessObject. Un objet par table, une interface pour chaque objet. Les DAO reprennent le code qui se trouvait dans AccessBD mais de manière répartie sur plusieurs classes. Un DAO est le seul objet qui peut contenir des requêtes SQL, c'est lui qui a la responsabilité d'interroger la base de données afin d'en récupérer des entités.</li>
+								<li>Le package com.banque.service qui représente les services métiers (BusinessObject/BusinessLogic). Une interface pour chaque objet. Les services vont faire usage des DAO afin de répondre à un besoin fonctionnel ou technique associé à l'application. Toute l'intelligence de l'application (tous les use cases) se trouvent dans les services métiers.</li>
+								<li>Le package com.banque.web.controller contient tous les controleurs de notre applications web. On y trouve donc les servlet. Chacune d'elle fait appel à un ou plusieurs service métiers en fonction de son besoin. Un contrôleur n'a pas le droit d'interroger un DAO en directe. Il ne peut que faire usage des services métiers.</li>
+								<li>Le package com.banque.web.filter contient un filtre qui a pour rôle de vérifier que l'utilisateur du site est bien authentifier avant de récupérer une ressource (JSP, contrôleur, images, ...)</li>
+								<li>Le package com.banque.web.listener contient un listener qui a pour rôle de tenir à jour une liste de personne qui sont connectés sur le site. </li>
+                <li>Le package com.banque.web.modele contient des beans qui servent lors de la communication entre la Vue et le Controleur ainsi que le Controleur et la Vue. </li>
+							</ul>
+						</li>
+						<li>Technique : l'organisation des répertoires est toujours celle de Maven.
+							<ul>
+								<li>un log a été mis en place pour l'ensemble du site. On fait usage ici de <a href="http://logging.apache.org/log4j/2.x/" target="_blank">log4j2</a>.
+								Le fichier de configuration se trouve à la racine du dossier resources.</li>
+                <li>des tests unitaires au format <a href="http://junit.org/junit4/" target="_blank">JUnit 4</a> sont disponibles dans les dossiers tests. Ils permettent de valider rapidement le bon fonctionnement du backoffice.</li>
+                <li>des tests de charges avec <a href="http://jmeter.apache.org/" target="_blank">JMeter</a> se trouve dans le dossier JMeter.</li>
+                <li>des tests de charges avec <a href="https://gatling.io/" target="_blank">Gatling</a> se trouve dans le dossier src\test\scala.</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<nav>
+			<ul class="pager">
+				<li class="previous" title="MVC JSTL"><a href="../Exo03-Banque%20JSP-Servlet%20JSTL/Exo03.html"><span aria-hidden="true">&larr;</span> Exercice Précédent</a></li>
+				<li class="next" title="Filter-Listener"><a href="../Exo05-Filter-Listener/Exo05.html">Exercice Suivant <span aria-hidden="true">&rarr;</span></a></li>
+			</ul>
+		</nav>
+
+		<br/><br/>
+		<footer>
+			<p class="text-center">
+				<a href="http://validator.w3.org/">
+					<img src="../bootstrap-3.3.7-dist/img/HTML5_Logo_32.png" alt="Valid HTML 5.0" />
+				</a><br/>
+				Copyright <span class="glyphicon glyphicon-copyright-mark"></span> <a href="http://ferretrenaud.fr" target="_blank">Ferret Renaud</a> 2013
+			</p>
+		</footer>
+
+		<script src="../bootstrap-3.3.7-dist/js/jquery.min.js"></script>
+		<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	</body>
+</html>
+

@@ -1,0 +1,69 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <!-- Toutes les informations communes sont dans le POM parent -->
+  <parent>
+    <groupId>formation.jee</groupId>
+    <artifactId>FormationJEE</artifactId>
+    <version>1.0.0</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>  
+  
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>fr.exo.jms</groupId>
+  <!-- ATTENTION : artifactId = context root -->
+  <artifactId>exo06.jms</artifactId>
+  <!-- Nous sommes en projet WEB -->
+  <packaging>war</packaging>
+  <description>Exemple d'utilisation de JMS avec ActiveMQ.</description>
+
+  <build>
+    <!-- Afin d'avoir un WAR qui porte le nom de l'artefact id -->
+    <!-- Sans qu'il ajoute automatiquement le numero de version -->
+    <finalName>${project.artifactId}</finalName>
+  </build>
+
+  <dependencies>
+    <!-- Active MQ -->
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-broker</artifactId>
+    </dependency>
+    <!-- Active MQ fait usage de slf4j -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+    </dependency>
+
+    <!-- En J2EE 7 -->
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-web-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+    </dependency>
+
+    <!-- Pour le test -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+
+    <!-- Log4J2 -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+    </dependency>
+
+
+  </dependencies>
+</project>

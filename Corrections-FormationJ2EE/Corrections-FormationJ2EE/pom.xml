@@ -1,0 +1,291 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>formation.jee</groupId>
+  <artifactId>FormationJEE</artifactId>
+  <version>1.0.0</version>
+  <description>POM parent pour la formation JEE. Regroupe les informations principales.</description>
+  <packaging>pom</packaging>
+  <name>Formation JEE Parent</name>
+
+
+  <developers>
+    <developer>
+      <id>rf</id>
+      <name>Ferret Renaud</name>
+      <email>admin@ferretrenaud.fr</email>
+      <url>http://ferretrenaud.fr</url>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>Simple Machines License</name>
+      <url>http://www.simplemachines.org/about/smf/license.php</url>
+    </license>
+  </licenses>
+
+  <properties>
+    <!-- Versions des differents elements utilises dans les projets -->
+    <version.mysql>5.1.46</version.mysql>
+    <version.junit>4.12</version.junit>
+    <version.junit.jupiter>5.2.0</version.junit.jupiter>
+    <version.junit.vintage>5.2.0</version.junit.vintage>
+    <version.junit.platform>1.2.0</version.junit.platform>    
+    <version.javaee-web-api>7.0</version.javaee-web-api>
+    <version.jstl>1.2</version.jstl>
+    <version.mockito>2.13.0</version.mockito>
+    <version.servlet>3.1.0</version.servlet>
+    <version.simple-jndi>0.11.4.1</version.simple-jndi>
+    <version.log4j2>2.11.0</version.log4j2>    
+    <version.io.gatling.highcharts>2.3.1</version.io.gatling.highcharts>
+    <version.activemq>5.15.4</version.activemq>
+    <version.slf4j>1.7.25</version.slf4j>
+
+    <!-- Proprietes Maven, noms spécifiques par/pour Maven -->
+    <!-- Après la version 1.8 mettre simplement 9 (et pas 1.9) -->
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <!-- Version des differents plugins -->
+    <!-- https://maven.apache.org/plugins/index.html -->
+    <maven-compiler-plugin-version>3.7.0</maven-compiler-plugin-version>
+    <maven-war-plugin-version>3.2.2</maven-war-plugin-version>
+    <maven-surefire-plugin-version>2.22.0</maven-surefire-plugin-version>
+    <jacoco-maven-plugin-version>0.8.1</jacoco-maven-plugin-version>
+    <gatling-maven-plugin-version>2.2.4</gatling-maven-plugin-version>
+    <scala-maven-plugin-version>3.3.2</scala-maven-plugin-version>
+
+    <!-- Informations propres à Sonar pour l'analyse qualite -->
+    <!-- https://docs.sonarqube.org/display/SONAR/Analysis+Parameters -->
+    <sonar.scm.disabled>true</sonar.scm.disabled>
+    <sonar.java.source>${maven.compiler.source}</sonar.java.source>    
+    <sonar.sourceEncoding>${project.build.sourceEncoding}</sonar.sourceEncoding>
+    <sonar.junit.reportsPath>${basedir}/target/surefire-reports</sonar.junit.reportsPath>
+    <sonar.jacoco.reportPaths>${basedir}/target/jacoco.exec</sonar.jacoco.reportPaths>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin-version}</version>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>${maven-war-plugin-version}</version>
+        <configuration>
+          <additionalProjectFacets>
+            <!-- Pour Eclipse -->
+            <java>${maven.compiler.target}</java>
+            <jst.web>3.1</jst.web>
+          </additionalProjectFacets>
+        </configuration>
+      </plugin>
+
+      <!-- http://www.eclemma.org/jacoco/trunk/doc/maven.html -->
+      <!-- Lancera l'analyse de couverture du code -->
+      <!-- Ne pas oublier de lancer une build (package ou test) avant de lancer sonar -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco-maven-plugin-version}</version>
+        <configuration>
+          <destFile>${sonar.jacoco.reportPaths}</destFile>
+          <dataFile>${sonar.jacoco.reportPaths}</dataFile>
+        </configuration>
+        <executions>
+          <execution>
+            <id>jacoco-initialize</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>jacoco-site</id>
+            <phase>package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin-version}</version>
+      </plugin>
+      
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>${scala-maven-plugin-version}</version>
+      </plugin>
+
+      <plugin>
+        <groupId>io.gatling</groupId>
+        <artifactId>gatling-maven-plugin</artifactId>
+        <version>${gatling-maven-plugin-version}</version>
+        <configuration>
+          <configFolder>src/test/resources</configFolder>
+          <dataFolder>src/test/resources/data</dataFolder>
+          <resultsFolder>target/gatling/results</resultsFolder>
+          <simulationsFolder>src/test/scala</simulationsFolder>
+          <simulationClass>RecordedSimulation</simulationClass>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+  
+  <!-- mvn site pour avoir un rapport HTML sur les tests -->
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>${maven-surefire-plugin-version}</version>
+      </plugin>
+    </plugins>
+  </reporting>  
+
+  <!-- Contraintes associees aux dependances, mais sans en faire l'importation. -->
+  <dependencyManagement>
+    <dependencies>
+
+      <!-- Log4J2 -->
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-bom</artifactId>
+        <version>${version.log4j2}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${version.slf4j}</version>
+      </dependency>     
+
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>1.2</version>
+      </dependency>
+      
+
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${version.mysql}</version>
+      </dependency>
+
+      <!-- Pour les tests unitaires -->
+      <!-- Exemple pour JUnit 5 -->
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>${version.junit.jupiter}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- Seulement pour lancer faire des tests Parametres -->
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>${version.junit.jupiter}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${version.junit}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- Seulement pour lancer les anciennes versions de JUnit (3,4) dans un IDE -->
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-launcher</artifactId>
+        <version>${version.junit.platform}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- Seulement pour lancer les anciennes versions de JUnit (3,4) dans un IDE -->
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${version.junit.jupiter}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- Seulement pour lancer les anciennes versions de JUnit (3,4) dans un IDE -->
+      <dependency>
+        <groupId>org.junit.vintage</groupId>
+        <artifactId>junit-vintage-engine</artifactId>
+        <version>${version.junit.vintage}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- Afin d'eviter les warning sur l'annotation @API -->
+      <dependency>
+        <groupId>org.apiguardian</groupId>
+        <artifactId>apiguardian-api</artifactId>
+        <version>1.0.0</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${version.mockito}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- mockito a besoin de cet element : -->
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>${version.servlet}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- Permet de faire usage de son pool JNDI durant les tests -->
+      <dependency>
+        <groupId>simple-jndi</groupId>
+        <artifactId>simple-jndi</artifactId>
+        <version>${version.simple-jndi}</version>
+        <scope>test</scope>
+      </dependency>
+      
+      <dependency>
+        <groupId>javax</groupId>
+        <artifactId>javaee-web-api</artifactId>
+        <version>${version.javaee-web-api}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>jstl</artifactId>
+        <version>${version.jstl}</version>
+      </dependency>
+      
+      <dependency>
+        <groupId>io.gatling.highcharts</groupId>
+        <artifactId>gatling-charts-highcharts</artifactId>
+        <version>${version.io.gatling.highcharts}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.activemq</groupId>
+        <artifactId>activemq-broker</artifactId>
+        <version>${version.activemq}</version>
+      </dependency>
+      
+    </dependencies>
+  </dependencyManagement>
+
+</project>

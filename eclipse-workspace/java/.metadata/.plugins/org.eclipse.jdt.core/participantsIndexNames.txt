@@ -1,0 +1,9 @@
+INDEX VERSION 1.131
+C:\Users\FATIMA\eclipse-workspace\java\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1373126109.index
+\exo04.banque.mvc\src\main\java
+C:\Users\FATIMA\eclipse-workspace\java\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1671909702.index
+\en04.banque.mvc\src\main\java
+C:\Users\FATIMA\eclipse-workspace\java\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\445062219.index
+\exo04.banque.mvc\src\main\java
+C:\Users\FATIMA\eclipse-workspace\java\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1672329654.index
+\FirstWebProject\src

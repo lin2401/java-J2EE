@@ -1,0 +1,253 @@
+<!--
+	Copyright 2013
+	Ferret Renaud
+	admin@ferretrenaud.fr
+-->
+
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="Author" content="FERRET Renaud"/>
+		<meta name="Description" content="Exercice de formation"/>
+		<meta name="copyright" content="(C) Copyright 2013 FERRET Renaud"/>
+		<meta name="distribution" content="global"/>
+
+		<title>Java JEE - Exercice 3 - MVC</title>
+
+		<link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+		<!-- Ne pas voir les liens lors de l'impressions -->
+		<style>
+			@media print {
+				a[href]:after {
+					content: none;
+				}
+			}
+		</style>
+		<!--[if lt IE 9]>
+			<script src="../bootstrap-3.3.7-dist/js/html5shiv.min.js"></script>
+			<script src="../bootstrap-3.3.7-dist/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="container">
+		<nav class="navbar navbar-default navbar-right" id="top">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="#" title="JEE - Exercice 3">JEE E3</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			  <ul class="nav navbar-nav">
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">1 - Installation<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t11">1-1 Importation du projet</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">2 - Client<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t21">2-1 Servlet Client</a></li>
+					<li><a href="#t22">2-2 JSP Client</a></li>
+					<li><a href="#t23">2-3 Test</a></li>
+				  </ul>
+				</li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3 - Compte<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#t31">3-1 Servlet Compte</a></li>
+					<li><a href="#t32">3-2 JSP Compte</a></li>
+					<li><a href="#t33">3-3 Test</a></li>
+				  </ul>
+				</li>
+			  </ul>
+			</div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		<br/>
+		<div class="page-header">
+			<h1>Java JEE - Exercice 3 - MVC</h1>
+			<p>Association des deux exercices afin de réaliser du MVC. On fera aussi usage de la JSTL.</p>
+			<p>MVC = Le Modèle (vos beans Compte, Utilisateur), Les vues (vos JSPs), Les contrôleurs (vos servlets). </p>
+			<p>D'une vue (JSP), j'ai le droit d'aller vers un contrôleur (Servlet) en amenant des modèles (vos beans/entités/données), d'un contrôleur j'ai le droit d'aller vers une vue (JSP) en amenant des modèles (vos beans/entités/données). </p>
+			<p>Important : cet exercice n'est pas à reproduire dans un projet réel, il est en l'état absolument pas sécurisé. </p>
+			<nav>
+				<ul class="pager">
+					<li class="previous" title="JSP"><a href="../Exo02-Banque%20JSP/Exo02.html"><span aria-hidden="true">&larr;</span> Exercice Précédent</a></li>
+					<li class="next" title="Banque"><a href="../Exo04-Banque%20Full/Exo04.html">Exercice Suivant <span aria-hidden="true">&rarr;</span></a></li>
+				</ul>
+			</nav>
+		</div> <!-- page header -->
+
+		<section>
+			<h2 id="t1"><span class="label label-default">1</span> Installation</h2>
+			<div class="panel panel-default panel-primary" id="t11">
+				<div class="panel-heading">
+					<h3 class="panel-title">Importation du projet <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Nous allons réunir les deux exercices précédents en un seul afin de répartir les rôles entre JSP et Servlet.</p>
+					<p>Vous pouvez </p>
+					<ul>
+						<li>continuez dans le même exercice, dans ce cas ajoutez la dépendance suivante (qui nous servira pour la <a href="https://fr.wikipedia.org/wiki/JavaServer_Pages_Standard_Tag_Library" target="_blank">JSTL</a>) à votre fichier pom.xml
+<pre>
+  ...
+  &lt;dependency&gt;
+    &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+    &lt;artifactId&gt;jstl&lt;/artifactId&gt;
+    &lt;version&gt;1.2&lt;/version&gt;
+  &lt;/dependency&gt;
+  ...</pre>
+						</li>
+
+						<li>ou importez celui qui est dans le dossier de l'exercice (en03.mvc.jstl). </li>
+					</ul>
+					<p>Si vous modifiez le fichier pom.xml, n'oubliez pas de faire un clic droit sur <b>votre projet</b> puis <b>Maven - Update Project...</b> afin qu'Eclipse prenne en compte les modifications.</p>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t2"><span class="label label-default">2</span> Client</h2>
+			<div class="panel panel-default panel-primary" id="t21">
+				<div class="panel-heading">
+					<h3 class="panel-title">Servlet Client <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Editez la servlet client, modifiez son code afin qu'elle réaliser les opérations suivantes :</p>
+					<ul>
+						<li>Se connecter à la base de données</li>
+						<li>Exécuter une requête qui récupérer la liste de tous les clients. </li>
+						<li>Place cette liste en request. </li>
+						<li>Se déconnecter de la base de données</li>
+						<li>Rediriger vers la JSP client sans perdre vos données (voir suite de l'exercice)
+<pre>
+  ...
+  <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html" target="_blank">RequestDispatcher</a> dispatcher = request.getRequestDispatcher("NomEtCheminDeLaPageOuVousVoulezAller.jsp");
+  dispatcher.forward(request, response);
+  ...  
+</pre>
+            
+            </li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t22">
+				<div class="panel-heading">
+					<h3 class="panel-title">JSP Client <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Editez la JSP client, modifiez son code afin qu'elle réaliser les opérations suivantes :</p>
+					<ul>
+						<li>Récupèrer de la request la liste des clients</li>
+						<li>Afficher cette liste en faisant usage des JSTL</li>
+						<li>Quand on va cliquer sur un client on veut aller vers <u>la servlet compte</u> (MVC oblige).</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t23">
+				<div class="panel-heading">
+					<h3 class="panel-title">Test <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Si vous avez importez le projet de l'énoncé, n'oubliez pas d'ajouter votre projet au serveur en sélectionnant le serveur puis en cliquant sur le bouton Add</p>
+					<p>Lancez votre serveur, puis allez sur l'URL qui caractérise votre contrôleur : http://localhost:8080/<i>NomDeVotreContext</i>/<i>NomDuControleur</i></p>
+					<p>Rappels :</p>
+					<ul>
+						<li>ATTENTION aux majuscules/minuscules</li>
+						<li>le <i>NomDeVotreContext</i> est spécifié dans les propriétés du projet (si vous avez importez le projet ce sera en03.mvc.jstl).
+						Pour retrouver son nom de <i>context root</i>, faire un clic droit sur son projet puis Properties, allez dans Web Project Settings.</li>
+						<li>le <i>NomDuControleur</i> est l'url mapping de la servlet (si vous avez importez c'est ServletClient).</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="t3"><span class="label label-default">3</span> Compte</h2>
+			<div class="panel panel-default panel-primary" id="t31">
+				<div class="panel-heading">
+					<h3 class="panel-title">Servlet Compte <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Editez la servlet compte, modifiez son code afin qu'elle réaliser les opérations suivantes :</p>
+					<ul>
+						<li>Se connecter à la base de données</li>
+						<li>Exécuter une requête qui récupérer la liste des comptes du client dont l'id est dans la request en tant qu'attribut. </li>
+						<li>Place cette liste en request. </li>
+						<li>Se déconnecter de la base de données</li>
+						<li>Rediriger vers la JSP compte sans perdre vos données (voir suite de l'exercice)
+<pre>
+  ...
+  <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html" target="_blank">RequestDispatcher</a> dispatcher = request.getRequestDispatcher("NomEtCheminDeLaPageOuVousVoulezAller.jsp");
+  dispatcher.forward(request, response);
+  ...  
+</pre>
+            </li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t32">
+				<div class="panel-heading">
+					<h3 class="panel-title">JSP Compte <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Reprenez votre JSP compte (ou éditez la si vous avez fait l'import), modifiez son code afin qu'elle réaliser les opérations suivantes :</p>
+					<ul>
+						<li>Récupèrer de la request la liste des comptes</li>
+						<li>Afficher cette liste en faisant usage des JSTL</li>
+					</ul>
+					<p>Attention : vous êtes en polymorphisme sur la manipulation de la liste des comptes. N'oubliez pas qu'il existe plusieurs types de compte. </p>
+					<p>Deux solutions :</p>
+					<ul>
+						<li>Utiliser la JSTL pour faire des <i>if</i> et des tests sur le nom des classes de vos objets Compte</li>
+						<li>Créer un objet CompteGenerique qui sera fabriqué par votre Servlet Compte afin de simplifier l'affichage. </li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="panel panel-default panel-primary" id="t33">
+				<div class="panel-heading">
+					<h3 class="panel-title">Test <a href="#top"><span class="glyphicon glyphicon-menu-up pull-right" title="Remonter"></span></a></h3>
+				</div>
+				<div class="panel-body">
+					<p>Lancez votre serveur, puis allez sur l'URL qui caractérise votre contrôleur client, clicquez sur un des boutons qui vous amènera sur le contrôleur compte.</p>
+					<p>Regardez vos URLs, quand on respecte le MVC, on ne doit jamais voir d'URL de JSP (car on passe toujours par des contrôleurs).</p>
+				</div>
+			</div>
+		</section>
+
+		<nav>
+			<ul class="pager">
+				<li class="previous" title="JSP"><a href="../Exo02-Banque%20JSP/Exo02.html"><span aria-hidden="true">&larr;</span> Exercice Précédent</a></li>
+				<li class="next" title="Banque"><a href="../Exo04-Banque%20Full/Exo04.html">Exercice Suivant <span aria-hidden="true">&rarr;</span></a></li>
+			</ul>
+		</nav>
+
+		<br/><br/>
+		<footer>
+			<p class="text-center">
+				<a href="http://validator.w3.org/">
+					<img src="../bootstrap-3.3.7-dist/img/HTML5_Logo_32.png" alt="Valid HTML 5.0" />
+				</a><br/>
+				Copyright <span class="glyphicon glyphicon-copyright-mark"></span> <a href="http://ferretrenaud.fr" target="_blank">Ferret Renaud</a> 2013
+			</p>
+		</footer>
+
+		<script src="../bootstrap-3.3.7-dist/js/jquery.min.js"></script>
+		<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	</body>
+</html>
+

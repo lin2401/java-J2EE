@@ -1,0 +1,70 @@
+package fr.banque;
+
+public class Compte {
+
+	private int numero;
+	private double solde;
+
+	public Compte(int numero, double solde) {
+
+		this.setNumero(numero);
+		this.setSolde(solde);
+	}
+
+	/**
+	 * @return the numero
+	 */
+	public int getNumero() {
+		return this.numero;
+	}
+
+	/**
+	 * @param numero the numero to set
+	 */
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+	/**
+	 * @return the solde
+	 */
+	public double getSolde() {
+		return this.solde;
+	}
+
+	/**
+	 * @param solde the solde to set
+	 */
+	public void setSolde(double solde) {
+		this.solde = solde;
+	}
+
+	public void ajouter(double montant) throws BanqueException {
+
+		this.solde = this.solde + montant;
+		this.setSolde(this.getSolde() + montant);// la methode preferee
+		throw new BanqueException("plus de place dans le tableau");
+	}
+
+	public void retirer(double montant) throws BanqueException {
+
+		this.solde = this.solde - montant;
+		throw new BanqueException();
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("this.getClass().getSimpleName()");
+		builder.append(this.getNumero);
+		builder.append(", solde=");
+		builder.append(this.solde);
+		builder.append(", getNumero()=");
+		builder.append(this.getNumero());
+		builder.append(", getSolde()=");
+		builder.append(this.getSolde());
+		builder.append("]");
+		return builder.toString();
+	}
+
+}

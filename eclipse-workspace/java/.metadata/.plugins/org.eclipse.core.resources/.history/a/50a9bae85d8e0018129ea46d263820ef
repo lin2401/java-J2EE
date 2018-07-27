@@ -1,0 +1,45 @@
+package fr;
+
+import fr.banque.Client;
+import fr.banque.Compte;
+
+public class Run {
+
+	public static void main(String[] args) {
+
+		Compte co = new Compte(2, 20);
+		Compte co2 = new Compte(3, 20);
+		Compte co3 = new Compte(2, 2);
+		Compte co4 = new Compte(1, 1);
+		Compte co5 = new Compte(5, 4);
+		Compte co6 = new Compte(6, 2);
+
+		Client c1 = new Client("HENRY", "Tiana", 30, 1);
+
+		System.out.println(co);
+
+		try {
+			c1.ajouterCompte(co);
+			c1.ajouterCompte(co2);
+			c1.ajouterCompte(co3);
+			c1.ajouterCompte(co4);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		c1.ajouterCompte(co5);
+
+		c1.ajouterCompte(co6);
+		System.out.println(c1);
+		c1.getCompte(2);
+		
+      try {
+		c1.retirer(25);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+      
+	}
+
+}

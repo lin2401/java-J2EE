@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="warn" strict="true">
+
+  <Appenders>
+    <Console name="stderr" target="SYSTEM_ERR">
+      <PatternLayout pattern="[%d{dd/MM/yyyy HH:mm:ss}] - TEST - %5p - %m %n" />
+    </Console>
+  </Appenders>
+
+  <Loggers>
+    <Logger name="com.banque" level="DEBUG" additivity="false">
+      <AppenderRef ref="stderr" />
+    </Logger>
+    <!-- Pour le reste -->
+    <Root level="warn">
+      <AppenderRef ref="stderr" />
+    </Root>
+  </Loggers>
+
+</Configuration>

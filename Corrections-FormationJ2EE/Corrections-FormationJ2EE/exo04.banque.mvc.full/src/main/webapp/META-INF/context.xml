@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Context reloadable="false">
+  <WatchedResource>WEB-INF/web.xml</WatchedResource>
+
+  <!-- 
+    Configuration de la data source.
+    Ne pas oublier de declarer le lien entre cette data source et l'application dans le fichier web.xml
+   -->
+  <Resource name="jdbc/netbankPool"
+    auth="Container"
+    type="javax.sql.DataSource"
+
+    initialSize="60"
+    maxTotal="50"
+    minIdle="5"
+    maxIdle="10"
+    maxWaitMillis="30000"
+    validationQuery="select 1"
+
+    driverClassName="com.mysql.jdbc.Driver"
+    username="root"
+    password=""
+    url="jdbc:mysql://localhost/banque?useSSL=false"
+  />
+  <!-- 
+  https://commons.apache.org/proper/commons-dbcp/configuration.html
+  
+  initialSize=The initial number of connections that are created when the pool is started. 
+  maxTotal=The maximum number of active connections that can be allocated from this pool at the same time, or negative for no limit.
+  maxIdle=The maximum number of connections that can remain idle in the pool, without extra ones being released, or negative for no limit.
+  minIdle=The minimum number of connections that can remain idle in the pool, without extra ones being created, or zero to create none.
+  maxWaitMillis=The maximum number of milliseconds that the pool will wait (when there are no available connections) for a connection to be returned before throwing an exception, or -1 to wait indefinitely.
+   -->
+  
+</Context>

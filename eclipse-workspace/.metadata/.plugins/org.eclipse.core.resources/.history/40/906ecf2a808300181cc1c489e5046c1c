@@ -1,0 +1,15 @@
+package fr.exemple;
+
+public class Personne {
+
+	public static void main(String[] args) {
+		// attributs / Typage / nom
+		
+		
+		
+		
+		//methodes
+
+	}
+
+}

@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <!-- Toutes les informations communes sont dans le POM parent -->
+  <parent>
+    <groupId>formation.jee</groupId>
+    <artifactId>FormationJEE</artifactId>
+    <version>1.0.0</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>fr.banque</groupId>
+  <!-- ATTENTION : artifactId = context root -->
+  <artifactId>exo02.jsp</artifactId>
+  <!-- Nous sommes en projet WEB -->
+  <packaging>war</packaging>
+  <description>Utilisation des JSP. Correction.</description>
+
+  <build>
+    <!-- Afin d'avoir un WAR qui porte le nom de l'artefact id -->
+    <!-- Sans qu'il ajoute automatiquement le numero de version -->
+    <finalName>${project.artifactId}</finalName>
+  </build>
+
+  <dependencies>
+    <!-- En J2EE 7 -->
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-web-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+  </dependencies>
+</project>
